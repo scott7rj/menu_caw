@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>css grid 1</title>
+<!-- <link rel="stylesheet" type="text/css" href="css/lib/normalize.css"> -->
+<!--<link href="css/lib/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
+<!--<link rel="stylesheet" type="text/css" href="css/html.css">-->
+<link rel="stylesheet" type="text/css" href="css/forms.css">
+<style>
+* {
+	margin:0;
+	padding:0;
+}
+body {
+	background-color: #555555;
+	font-size: 0.75em;
+}
+.wrapper {
+	font-size: 1.0em;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-areas:
+	"login user"
+	"search search"
+	"content content";
+	grid-gap: 1px;
+}
+#login {
+	/*grid-column: 1 / 3;*/
+	grid-area: login;
+}
+#user {
+	/*grid-column: 1 / 3;*/
+	grid-area: user;
+}
+#search {
+	grid-area: search;
+}
+.wrapper > div {
+	background: #aaaaaa;
+	padding: 0.1em;
+}
+/*
+.wrapper > div:nth-child(odd) {
+	background: #ccc;
+}
+*/
+#content {
+	grid-area: content;
+	display: grid;
+	grid-gap: 0.1em;
+	grid-template-columns: repeat(auto-fill, minmax(500px,1fr));
+}
+#content > div {
+	background: #99ccff;
+	padding: 0.2em;
+}
+#searchresults {
+	padding: 0.1em;
+	height: 100%;
+	overflow: auto;
+}
+#menu {
+	padding: 0.2em 1.0em 0.5em 2.5em;
+}
+#content > div:nth-child(odd) {
+	background: #4da6ff;
+}
+#txtShortcut_FyeWgJ {
+    background-image: url('img/target.svg');
+    position: left;
+    background-size: 15px;
+    background-repeat: no-repeat;
+    padding-left: 1.5em;
+}
+#txtSearch_FyeWgJ {
+    background-image: url('img/search.svg');
+    position: left;
+    background-size: 15px;
+    background-repeat: no-repeat;
+    padding-left: 1.5em;
+}
+ul {
+	list-style-type: circle;
+	padding: 0em 0em 0em 1.8em;
+}
+ul.a {
+	margin: 0.2em;
+	padding: 0em 0em 0em 1.5em;
+	background: #ccc;
+}
+ul.a > li > label:hover {
+	cursor: pointer;
+	color: crimson;
+}
+ul.b {
+	margin: 0.2em;
+	padding: 0em 0em 0em 1.5em;
+	display: none;
+}
+ul.b > li:hover {
+	cursor: pointer;
+	color: crimson;
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+	<div id="login" clearable="f">
+		<input type="text" id="txtMatricula_FyeWgJ" size="8" maxlength="7" placeholder="matricula" />
+		<input type="password" id="txtSenha_FyeWgJ" size="8" maxlength="8" placeholder="senha" />
+		<button class="app-btn" title="login_FyeWgJ" onclick="logon()">logon</button>
+		<button class="app-btn" title="logout" onclick="logoff()">logoff</button>
+	</div>
+	<div id="user" clearable="t"></div>
+	<div id="search" clearable="t">
+		<input type="text" id="txtShortcut_FyeWgJ" size="12" maxlength="12" onkeyup="" placeholder="shortcut...">
+		<input type="text" id="txtSearch_FyeWgJ" size="30" maxlength="100" onkeyup="search()" placeholder="search...">
+		<div id="searchresults" clearable="t">
+			<ul id="menu" class="a">
+				<li>
+					<a href="#" id="01" onclick="menuitem(this)">Conta/Contrato</a>
+					<ul id="ul_01">
+						<li><a href="#">Informações do Contrato</a></li>
+						<li><a href="#">Informações do Contrato em Data Anterior</a></li>
+						<li><a href="#">Situação</a></li>
+						<li><a href="#" id="01_01" onclick="menuitem(this)">Numeração Contas Migradas</a>
+							<ul id="ul_01_01">
+								<li><a href="#" onclick="go(this)" layout="3rows">Conta SIDEC a partir da Conta NSGD</a></li>
+								<li><a href="#" onclick="go(this)" layout="2rows">Conta NSGD a partir da Conta SIDEC</a></li>    
+							</ul>
+						</li>
+						<li><a href="#">Lançamentos Financeiros</a></li>
+						<li><a href="#">Lançamentos não Financeiros</a></li>
+						<li><a href="#">Funcionalidades Especiais</a></li>
+						<li><a href="#" id="01_02" onclick="menuitem(this)">Cheques</a>
+							<ul id="ul_01_02">
+								<li><a href="#">Solicitação de Talão de Cheque</a></li>
+								<li><a href="#">Talão</a></li>
+								<li><a href="#">Histórico Talão</a></li>
+								<li><a href="#">Cheque OP</a></li>
+								<li><a href="#">Cheques Depositados</a></li>
+								<li><a href="#">Contra Ordem</a></li>
+								<li><a href="#">Situação de Conta e FL de Cheque Comp</a></li>
+								<li><a href="#">Histórico de Cheque</a></li>
+							</ul>
+						</li>
+						<li><a href="#" id="01_03" onclick="menuitem(this)">Histórico de Conta/Contrato</a>
+							<ul id="ul_01_03">
+							<li><a href="#">Informação de Conta em Data Anterior</a></li>
+							<li><a href="#">Extrato Histórico/Microfilmagem</a></li>
+							<li><a href="#">Histórico FE por Conta</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Consulta Tarifa Serviço Prestado</a></li>
+						<li><a href="#" id="01_04" onclick="menuitem(this)">Cheques Novos</a>
+							<ul id="ul_01_04">
+								<li><a href="#">Cheques</a></li>
+								<li><a href="#">Talão</a></li>
+								<li><a href="#">Estoque</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="content" clearable="f">
+		<div id="div1_FyeWgJ" clearable="t">1</div>
+		<div id="div2_FyeWgJ" clearable="t">2</div>
+		<div id="div3_FyeWgJ" clearable="t">3</div>
+		<div id="div4_FyeWgJ" clearable="t">4</div>
+		<div id="div5_FyeWgJ" clearable="t">5</div>
+		<div id="div6_FyeWgJ" clearable="t">6</div>
+		<div id="div7_FyeWgJ" clearable="t">7</div>
+		<div id="div8_FyeWgJ" clearable="t">8</div>
+		<div id="div9_FyeWgJ" clearable="t">9</div>
+		<div id="div10_FyeWgJ" clearable="t">10</div>
+		<div id="div11_FyeWgJ" clearable="t">11</div>
+		<div id="div12_FyeWgJ" clearable="t">12</div>
+	</div>
+</div>
+<script src="js/lib/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script>
+function go(obj) {
+	console.log(obj.getAttribute("layout"));
+}
+function reconfigure(layout) {
+	if (layout === 'layout1') {
+		$('#content').css({'grid-template-columns':'1fr'});
+	}
+	if (layout === 'layout2') {
+		$('#content').css({'grid-template-columns':'1fr 1fr 1fr'});
+	}
+	$('#txtSearch_FyeWgJ').val('');
+	$("#menu").hide();
+	//grid-template-columns: repeat(auto-fill, minmax(500px,1fr));
+}
+function menuitem(obj) {
+	var ul;
+	ul = document.getElementById("ul_"+obj.id);
+	console.log(obj.innerHTML + ' ' + obj.id + ' ' + ul.style.display);
+	
+	if (ul.style.display === 'block' || ul.style.display === '') {
+		ul.style.display = 'none';
+	} else {
+		ul.style.display = 'block';
+	}
+}
+function search() {
+	var input, filter, ul, li, a, i, div;
+	const ALL = 'ALL';
+	input = document.getElementById("txtSearch_FyeWgJ");
+	filter = input.value.toUpperCase();
+	div = document.getElementById("searchresults");
+	li = div.getElementsByTagName("li");
+
+	if (filter === '') {
+		$("#menu").hide();
+		return;
+	}
+	if (filter === ALL) {
+		console.log('show all');
+		for (i = 0; i < li.length; i++) {
+			li[i].parentNode.parentNode.parentNode.parentNode.style.display = "";
+			li[i].parentNode.parentNode.style.display = "";
+			li[i].parentNode.style.display = "block";
+			li[i].style.display = "";
+		}
+		return;
+	}
+	for (i = 0; i < li.length; i++) {
+		if (filter === '') {
+			li[i].style.display = "";
+		} else {
+			a = li[i].getElementsByTagName("a")[0];
+			if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+				li[i].parentNode.parentNode.parentNode.parentNode.style.display = "";
+				li[i].parentNode.parentNode.style.display = "";
+				li[i].parentNode.style.display = "block";
+				li[i].style.display = "";
+
+			} else {
+				li[i].style.display = "none";
+			}
+		}
+	}
+	$("#menu").show();
+}
+function logon() {
+	console.log('logon');
+}
+function logoff() {
+	console.log('logoff');
+	
+	$("div").each(function(i) {
+    	console.log($(this).attr('clearable'));
+    	if ($(this).attr('clearable') == 't') {
+    		$(this).html('');
+       	}
+  	});
+}
+$( document ).ready(function() {
+    console.log( "ready!" );
+    $('#txtSearch_FyeWgJ').focus();
+    $("#searchresults").hide();
+    $(document).keypress(function(e) {
+        if(e.which == 13) {
+            console.log('You pressed enter!');
+            console.log($('#txtShortcut_FyeWgJ').is(':focus'));
+            console.log($('#txtSearch_FyeWgJ').is(':focus'));
+            if($('#txtShortcut_FyeWgJ').is(':focus') == true) {
+            	$('#txtShortcut_FyeWgJ').val('');
+            }
+            if($('#txtSearch_FyeWgJ').is(':focus') == true) {
+            	$('#txtSearch_FyeWgJ').val('');
+            }
+        }
+    });
+    
+});
+</script>
+</body>
+</html>

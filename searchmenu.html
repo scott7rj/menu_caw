@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Create a column layout with Flexbox */
+.row {
+  display: flex;
+}
+
+/* Left column (menu) */
+.left {
+  flex: 35%;
+  padding: 15px 0;
+}
+
+.left h2 {
+  padding-left: 8px;
+}
+
+/* Right column (page content) */
+.right {
+  flex: 65%;
+  padding: 15px;
+}
+
+/* Style the search box */
+#mySearch {
+  width: 100%;
+  font-size: 18px;
+  padding: 11px;
+  border:1px solid #ddd;
+}
+
+/* Style the navigation menu inside the left column */
+#myMenu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myMenu li a {
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block;
+}
+
+#myMenu li a:hover {
+  background-color: #eee;
+}
+</style>
+</head>
+<body>
+
+<div class="row">
+  <div id="left" class="left" style="background-color:#bbb;">
+    <h2>Menu</h2>
+    <input type="text" id="mySearch" onkeyup="search()" placeholder="Search.." title="Type in a category">
+    <ul id="myMenu">
+      <li>
+      	<a href="#">Conta/Contrato</a>
+      	<ul>
+      		<li><a href="#">Informações do Contrato</a></li>
+          <li><a href="#">Informações do Contrato em Data Anterior</a></li>
+          <li><a href="#">Situação</a></li>
+          <li><a href="#">Numeração Contas Migradas</a>
+            <ul>
+              <li><a href="#">Conta SIDEC a partir da Conta NSGD</a></li>
+              <li><a href="#">Conta NSGD a partir da Conta SIDEC</a></li>    
+            </ul>
+          </li>
+          <li><a href="#">Lançamentos Financeiros</a></li>
+          <li><a href="#">Lançamentos não Financeiros</a></li>
+          <li><a href="#">Funcionalidades Especiais</a></li>
+          <li><a href="#">Cheques</a>
+            <ul>
+              <li><a href="#">Solicitação de Talão de Cheque</a></li>
+              <li><a href="#">Talão</a></li>
+              <li><a href="#">Histórico Talão</a></li>
+              <li><a href="#">Cheque OP</a></li>
+              <li><a href="#">Cheques Depositados</a></li>
+              <li><a href="#">Contra Ordem</a></li>
+              <li><a href="#">Situação de Conta e FL de Cheque Comp</a></li>
+              <li><a href="#">Histórico de Cheque</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Histórico de Conta/Contrato</a>
+            <ul>
+              <li><a href="#">Informação de Conta em Data Anterior</a></li>
+              <li><a href="#">Extrato Histórico/Microfilmagem</a></li>
+              <li><a href="#">Histórico FE por Conta</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Consulta Tarifa Serviço Prestado</a></li>
+          <li><a href="#">Cheques Novos</a>
+            <ul>
+              <li><a href="#">Cheques</a></li>
+              <li><a href="#">Talão</a></li>
+              <li><a href="#">Estoque</a></li>
+            </ul>
+          </li>
+      	</ul>
+      </li>
+      <li>
+      	<a href="#">Unidade</a>
+      	<ul>
+      		<li><a href="#">Pendências</a></li>
+          <li><a href="#">Contas Abertas na Data de Movimento</a></li>
+          <li><a href="#">CPF/CNPJ Irregular</a></li>
+          <li><a href="#">Lançamentos Financeiros</a>
+            <ul>
+              <li><a href="#">Por Unidade de Origem/Data</a></li>
+              <li><a href="#">Por Unidade de Relacionamento/Data</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Lançamentos não Financeiros</a>
+            <ul>
+              <li><a href="#">Por Unidade de Relacionamento/Data</a></li>
+              <li><a href="#">Por NSU/Data</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Agendamentos</a></li>
+          <li><a href="#">Solicitação de Talão de Cheque</a></li>
+          <li><a href="#">Solicitação de Encerramento de Conta</a></li>
+          <li><a href="#">Reserva Números de Conta</a>
+            <ul>
+                <li><a href="#">Consultar</a></li>
+              <li><a href="#">Gestor</a></li>
+              <li><a href="#">Temporária</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Numeração de Conta Disponível</a>
+            <ul>
+              <li><a href="#">Consultar por Número de Conta</a></li>
+              <li><a href="#">Consultar por Unidade/Situação Reserva</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Migração</a>
+            <ul>
+              <li><a href="#">Adesão Convenente Conta Salário</a></li>
+              <li><a href="#">Adesão Conta</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#">Informações Gerenciais</a></li>
+      <li><a href="#">Contábil</a></li>
+      <li><a href="#">Remuneração</a></li>
+      <li><a href="#">Tributário</a></li>
+      <li><a href="#">Parâmetros Produto</a></li>
+      <li><a href="#">Tarifa</a></li>
+      <li><a href="#">Parâmetros Cheque</a></li>
+      <li><a href="#">Parâmetros Conta/Contrato</a></li>
+      <li><a href="#">Parâmetros Sistema</a></li>
+      <li><a href="#">Parâmetros CIF</a>
+        <ul>
+          <li><a href="#">Composição de CIF</a>
+            <ul>
+              <li><a href="#">Ação</a></li>
+              <li><a href="#">Modo</a></li>
+              <li><a href="#">Grupo</a></li>
+              <li><a href="#">Subgrupo</a></li>
+              <li><a href="#">Tipo</a></li>
+              <li><a href="#">Subtipo</a></li>
+              <li><a href="#">Ação x Modo</a></li>
+              <li><a href="#">Ação x Modo x Grupo</a></li>
+              <li><a href="#">Grupo x Subgrupo</a></li>
+              <li><a href="#">Tipo x Subtipo</a></li>
+              <li><a href="#">Grupo x Subgrupo x Tipo x Subtipo</a></li>
+            </ul>
+          </li>
+        </ul>  
+      </li>
+      <li><a href="#">Remanejamento de Contas</a></li>
+      <li><a href="#">Transferência de Contas</a></li>
+      <li><a href="#">Migração</a></li>
+    </ul>
+  </div>
+  
+<script>
+function search() {
+
+	var input, filter, ul, li, a, i, div;
+	
+	input = document.getElementById("mySearch");
+	filter = input.value.toUpperCase();
+	
+	div = document.getElementById("left");
+	
+	li = left.getElementsByTagName("li");
+	
+	for (i = 0; i < li.length; i++) {
+		if (filter === '') {
+			li[i].style.display = "";
+		} else {
+			a = li[i].getElementsByTagName("a")[0];
+			if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+				console.log(a.innerHTML.toUpperCase().indexOf(filter));
+				console.log(a.innerHTML + " : " + li[i].parentNode.parentNode.nodeName);
+				li[i].style.display = "";
+				
+				if (li[i].parentNode.parentNode.parentNode.parentNode.nodeName === 'LI') {
+			 		li[i].parentNode.parentNode.parentNode.parentNode.style.display = "";
+			 	}
+			 	 
+			 	if (li[i].parentNode.parentNode.nodeName === 'LI') {
+			 		li[i].parentNode.parentNode.style.display = "";
+			 	} 
+			} else {
+		 		li[i].style.display = "none";
+			}
+		}
+	}
+}
+function myFunction() {
+    var input, filter, ul, li, a, i;
+    input = document.getElementById("mySearch");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myMenu");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        
+        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+        
+    }
+}
+</script>
+
+</body>
+</html>

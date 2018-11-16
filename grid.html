@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>css grid 1</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+}
+.wrapper {
+	display: grid;
+	grid-template-columns: 1fr;
+	/*grid-template-columns:repeat(2, 1fr 2fr);*/
+	grid-gap: 0.2em;
+}
+.wrapper > div {
+	background: #eee;
+	padding: 1em;
+}
+.wrapper > div:nth-child(odd) {
+	background: #ddd;
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+	<div id="logindiv">Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+	<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+	<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+	<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+	<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+	<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+	<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,183 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+	
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: #333333;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar a {
+    float: left;
+    font-size: 0.8em;
+    color: white;
+    text-align: center;
+    padding: 4px 4px;
+    text-decoration: none;
+    border: 2px solid #333333;
+}
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+    font-size: 0.8em;    
+    border: none;
+    outline: none;
+    color: white;
+    padding: 4px 4px;
+    background-color: inherit;
+    margin: 0;
+    border: 2px solid #333333;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: #666666;
+    color: white;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #e6e6e6;
+    width: 100%;
+    left: 0;
+    z-index: 1;
+}
+
+.dropdown-content .header {
+    background: #e6e6e6;
+    padding: 4px;
+    font-size: 0.8em;  
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Create three equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 25%;
+    padding: 10px;
+    background-color: #e6e6e6;
+    height: 550px;
+    font-size: 0.8em;
+    overflow: auto;
+}
+
+.column a {
+    float: none;
+    color: white;
+    padding: 4px;
+    margin: 0px 0px 2px 0px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-size: 1.0em;
+    border: 2px solid black;
+    background-color: #333333;
+}
+
+.column a:hover {
+    background-color: #a6a6a6;
+    color: black;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+/***********************/
+/* Acordeon styles */
+.tab {
+  position: relative;
+  margin-bottom: 1px;
+  width: 100%;
+  color: white;
+  overflow: hidden;
+}
+.tab input {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+.tab label {
+  position: relative;
+  display: block;
+  padding: 4px;
+  background: #333333;
+  color: gold;
+  font-weight: normal;
+  cursor: pointer;
+  border: 2px solid black;
+  margin: 0px 0px 2px 0px;
+}
+.tab-content {
+  max-height: 0;
+  overflow: hidden;
+  background: transparent;
+  -webkit-transition: max-height .10s;
+  -o-transition: max-height .10s;
+  transition: max-height .10s;
+}
+.tab-content a {
+  background-color: #595959;
+  color: white;
+  margin-left: 7px;
+}
+.tab-content a:hover {
+  background-color: #cccccc;
+  color: black;
+}
+/* :checked */
+.tab input:checked ~ .tab-content {
+  max-height: 100vh;
+}
+/***********************/
+/*
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 4px;
+  background-color: #2196F3;
+  padding: 4px;
+}
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 4px;
+  font-size: 2em;
+}
+.grid-container > div > div {
+	display: none;
+}
+.grid-container > div > div > div {
+	display: none;
+}
+.grid-container > div:hover {
+	cursor: pointer;
+	background-color: green;
+}
+
+.grid-container > div:hover .xxx {
+	display: block;
+}
+.grid-container > div > div > span:hover {
+	background-color: yellow;
+}
+.grid-container > div > div:hover .yyy {
+	display: block;
+}
+*/

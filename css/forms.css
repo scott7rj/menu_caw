@@ -1,0 +1,59 @@
+input[type="text"], input[type="email"], select, input[type="password"] {
+	font-family: Arial, Verdana, Courier;
+    font-size: 0.9em;
+    margin: 4px 0px 0px 2px;
+    padding: 0 0.2em;
+    text-transform: none;
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+    height: 1.6em;
+    vertical-align: top;
+    /*text-transform: uppercase;*/
+}
+select {
+	font-family: Arial, Verdana, Courier;
+    font-size: 1.1rem;
+    margin: 4px 0px 0px 2px;
+    padding: 0rem 0rem 0rem 0rem;
+    text-transform: none;
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+    height: 1.6rem;
+    vertical-align: top;
+    /*text-transform: uppercase;*/
+}
+textarea {
+    margin: 0;
+    padding: 0rem 0rem 0rem 0.2rem;
+    text-transform: none;
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+    /*height: 1.4rem;*/
+}
+input[type="text"]:disabled {
+    background-color: #CCCCCC;
+    border-color: black;
+}
+input[type="checkbox"] {
+}
+.app-btn {
+   margin: 4px 0px 0px 0px;
+   padding: 0;
+   border: 2px solid black;
+   background-color: #CCCCCC;
+   color: black;
+   height: 1.8em;
+   vertical-align: top;
+   font-size: 0.8em;
+   font-weight: bold;
+   width: 4.0em;
+}
+.app-btn:hover {
+    background-color: #777777;
+}
+.app-btn:focus {
+    background-color: #777777;
+}
