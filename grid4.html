@@ -181,9 +181,38 @@ ul.b > li:hover {
 		<div id="div11_FyeWgJ" clearable="t">11</div>
 		<div id="div12_FyeWgJ" clearable="t">12</div>
 	</div>
+	<button value="load" onclick="loadMenu()">LOAD</button>
+	<div id="dv"></div>
 </div>
 <script src="js/lib/jquery-3.3.1.min.js" type="text/javascript"></script>
 <script>
+function loadMenu() {
+	console.log('load');
+	var xmlhttp = new XMLHttpRequest();
+	var url = "https://apex.oracle.com/pls/apex/www/ws/menu/1/0";
+	xmlhttp.onreadystatechange = function() {
+		console.log(this.status);
+    	if (this.readyState == 4 && this.status == 200) {
+			console.log(this.responseText);
+        	var myArr = JSON.parse(this.responseText);
+        	myFunction(myArr.items);
+    	}
+	};
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
+}
+function myFunction(arr) {
+    var out = "";
+    var i;
+    for(i = 0; i < arr.length; i++) {
+		console.log(arr[i].description);
+        out += '<a href="' + arr[i].id + '">' + 
+        arr[i].description + '</a><br>';
+    }
+    document.getElementById("dv").innerHTML = out;
+}
+
+
 function go(obj) {
 	console.log(obj.getAttribute("layout"));
 }
