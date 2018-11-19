@@ -29,6 +29,7 @@ ALTER TABLE  "ITEM_MENU" ADD CONSTRAINT "ITEM_MENU_FK" FOREIGN KEY ("ID_MENU") R
 /
 INSERT INTO MENU(DESCRIPTION, SEQ) VALUES('NSGD',1)
 /
+--LEVEL 0
 INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT, TREE_LEVEL, SEQ) VALUES('Conta/Contrato',1,0,0,1)
 /
 INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT, TREE_LEVEL, SEQ) VALUES('Unidade',1,0,0,2)
@@ -61,6 +62,7 @@ INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT, TREE_LEVEL, SEQ) VALUES('
 /
 INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT, TREE_LEVEL, SEQ) VALUES('Teste FSW',1,0,0,16)
 /
+--level 1
 --conta/contrato
 	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Informações do Contrato',1,1,1,1)
 	/
@@ -76,17 +78,13 @@ INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT, TREE_LEVEL, SEQ) VALUES('
 	/
 	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Funcionalidades Especiais',1,1,1,7)
 	/
-	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Histórico de Conta/Contrato',1,1,1,8)
+	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Cheques',1,1,1,8)
 	/
-	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Consulta Tarifa Serviço Prestado',1,1,1,9)
+	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Histórico de Conta/Contrato',1,1,1,9)
 	/
-	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Cheques Novos',1,1,1,10)
+	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Consulta Tarifa Serviço Prestado',1,1,1,10)
 	/
-	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Cheques',1,11,2,11)
-	/
-	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Talão',1,11,2,12)
-	/
-	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Estoque',1,11,2,13)
+	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Cheques Novos',1,1,1,11)
 	/
 --unidade
 	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Pendências',1,2,1,1)
@@ -141,6 +139,7 @@ INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT, TREE_LEVEL, SEQ) VALUES('
 	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Taxa de Juros',1,5,1,2)
 	/
 	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Taxa Referencial',1,5,1,3)
+	/
 --	tributario
 	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Alíquota',1,6,1,1)
 	/
@@ -245,7 +244,75 @@ INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT, TREE_LEVEL, SEQ) VALUES('
 	/
 	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Associação LF x CIF x Sistema Origem',1,15,1,7)
 	/
-	
+--LEVEL 3
+--numeração contas migradas
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Conta SIDEC a partir da Conta NSGD',1,20,2,1)
+		/                                                                                                                       
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Conta NSGD a partir da Conta SIDEC',1,20,2,2)
+		/
+--cheque		
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Solicitação de Talão de Cheque',1,24,2,1)
+		/                                                                                                                     
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Talão',1,24,2,2)
+		/
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Histórico Talão',1,24,2,3)
+		/
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Cheque OP',1,24,2,4)
+		/
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Cheques Depositados',1,24,2,5)
+		/
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Contra Ordem',1,24,2,6)
+		/
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Situação de Conta e FL de Cheque Comp',1,24,2,7)
+		/
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Histórico de Cheque',1,24,2,8)
+		/
+--historico conta contrato
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Informação de Conta em Data Anterior',1,25,2,1)
+		/
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Extrato Histórico/Microfilmagem',1,25,2,2)
+		/
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Histórico FE por Conta',1,25,2,3)
+		/
+--cheques novos		
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Cheques',1,27,2,1)
+		/
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Talão',1,27,2,2)
+		/
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Estoque',1,27,2,3)
+		/
+--unidade, lancamentos financeiros		
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Por Unidade de Origem / Data',1,31,2,1)
+		/
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Por Unidade de Relacionamento / Data',1,31,2,2)
+		/
+--unidade, lancamentos nao financeiros				
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Por Unidade de Relacionamento / Data',1,32,2,1)
+		/
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Por NSU / Data',1,32,2,2)
+		/
+--unidade, reserva numeros conta
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Consultar',1,36,2,1)
+		/
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Gestor',1,36,2,1)
+		/
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Temporária',1,36,2,1)
+		/
+--unidade, Numeração de Conta Disponível		
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Consultar por Número de Conta',1,37,2,1)
+		/                                                                                   
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Consultar por Unidade/Situação Reserva',1,37,2,1)
+		/
+--unidade, migracao
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Adesão Convenente Conta Salário',1,38,2,1)
+		/                                                                                             
+		INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Adesão Conta',1,38,2,2)
+		/
+		
+		
+		
+INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('',1,,2,)
+/
 
 
 --teste proc
@@ -279,3 +346,112 @@ END;
 
 
 
+1.Conta/Contrato
+---17.Informações do Contrato
+---18.Informações do Contrato em Data Anterior
+---19.Situação
+---20.Numeração Contas Migradas
+------100.Conta SIDEC a partir da Conta NSGD
+------101.Conta NSGD a partir da Conta SIDEC
+---21.Lançamentos Financeiros
+---22.Lançamentos não Financeiros
+---23.Funcionalidades Especiais
+---24.Cheques
+------102.Solicitação de Talão de Cheque
+------103.Talão
+------104.Histórico Talão
+------105.Cheque OP
+------106.Cheques Depositados
+------107.Contra Ordem
+------108.Situação de Conta e FL de Cheque Comp
+------109.Histórico de Cheque
+---25.Histórico de Conta/Contrato
+---26.Consulta Tarifa Serviço Prestado
+---27.Cheques Novos
+2.Unidade
+---28.Pendências
+---29.Contas Abertas na Data de Movimento
+---30.CPF/CNPJ Irregular
+---31.Lançamentos Financeiros
+---32.Lançamentos não Financeiros
+---33.Agendamentos
+---34.Solicitação Talão Cheques
+---35.Solicitação Encerramento Conta
+---36.Reserva Números Conta
+---37.Numeração Conta Disponível
+---38.Migração
+3.Informações Gerenciais
+---39.Resumo de Movimentações
+---40.Pendências Regularizadas
+---41.Cenário de Poupança
+---42.Solicita Relatório Gerencial
+---43.Arquivos Processados
+---44.Solicitação de Talão de Cheque
+---45.Interfaces
+---46.Conta/Contrato Encerrada com Saldo
+4.Contábil
+---47.Vincular Evento Contábil/Custo
+---48.Histórico de Parametrização Contábil
+---49.Pendência de Parametrização
+5.Remuneração
+---50.Associação Grupo Remuneração x Produto
+---51.Taxa de Juros
+---52.Taxa Referencial
+6.Tributário
+---53.Alíquota
+---54.Informações de IRRF Conta/Contrato
+7.Parâmetros Produto
+---55.Produto Depósito
+---56.Produto Propriedade
+---57.Caracter de Produto e Prod/Propriedade
+---58.Associação de Produto x Característica
+---59.Associação Prod/Prop x Característica
+---60.Produto/Propriedade/NJUR
+8.Tarifa
+---61.Tarifas de Serviços
+---62.Pacotes de Serviços
+---63.Cesta de Serviço
+---64.Consultas
+---65.Tarifas Periódicas
+9.Parâmetros Cheque
+---66.Situação de Cheque
+---67.Motivo de Cheque
+---68.Associação Situação x Motivo Cheque
+---69.Parâmetros de Contas e Cheques
+10.Parâmetros Conta/Contrato
+---70.Situação de Conta/Contrato
+---71.Motivo de Conta/Contrato
+---72.Associação Sit/Motivo Conta/Contrato
+---73.Tipo de Saldo
+---74.Funcionalidade Especial
+---75.Inativação/Encerramento
+---76.Cadastro Impeditivo
+11.Parâmetros Sistema
+---77.Prioridade de Lançamento
+---78.Canal
+---79.Sistema de Acesso NSGD
+---80.Descrição do Lançamento
+---81.Mensagem do Sistema
+---82.Unidade
+---83.Inconsistência de Parâmetros
+12.Parâmetros CIF
+---84.Composição de CIF
+---85.CIF
+---86.Comportamento do CIF
+13.Remanejamento Contas
+---87.Incluir Remanejamento Total
+---88.Incluir Remanejam. Parcial por Produto
+---89.Incluir Remanejamento Parcial por FE
+---90.Consultar
+14.Transferência Contas
+---91.Incluir
+---92.Consultar
+15.Migração
+---93.Associação Produto e Área Gestora
+---94.Calendário
+---95.Ciclo
+---96.Estatística de Migração
+---97.Estatística de Validação SIDEC
+---98.Inconsistência por Conta SIDEC
+---99.Associação LF x CIF x Sistema Origem
+16.Teste FSW
