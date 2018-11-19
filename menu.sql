@@ -246,3 +246,36 @@ INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT, TREE_LEVEL, SEQ) VALUES('
 	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Associação LF x CIF x Sistema Origem',1,15,1,7)
 	/
 	
+
+
+--teste proc
+BEGIN
+   FOR level0 IN (
+        SELECT *
+          FROM item_menu
+         WHERE id_parent = 0)
+   LOOP
+
+      DBMS_OUTPUT.put_line(level0.ID || '.' || level0.description);
+
+      FOR LEVEL1 IN (
+          SELECT * FROM item_menu WHERE tree_level = 1 AND id_parent = level0.id
+      )
+      LOOP
+          DBMS_OUTPUT.put_line('---' || level1.id || '.' || level1.description);
+
+          FOR LEVEL2 IN (
+             SELECT * FROM item_menu WHERE tree_level = 2 AND id_parent = level1.id
+          )
+          LOOP
+             DBMS_OUTPUT.put_line('------' || level2.id || '.' || level2.description);
+          END LOOP;
+
+      END LOOP;
+
+
+   END LOOP;
+END;
+
+
+

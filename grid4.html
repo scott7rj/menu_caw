@@ -181,34 +181,59 @@ ul.b > li:hover {
 		<div id="div11_FyeWgJ" clearable="t">11</div>
 		<div id="div12_FyeWgJ" clearable="t">12</div>
 	</div>
-	<button value="load" onclick="loadMenu()">LOAD</button>
+	<button value="load" onclick="loadMenu(1)">LOAD</button>
 	<div id="dv"></div>
 </div>
 <script src="js/lib/jquery-3.3.1.min.js" type="text/javascript"></script>
 <script>
-function loadMenu() {
+function loadMenu(id_menu) {
 	console.log('load');
-	var xmlhttp = new XMLHttpRequest();
-	var url = "https://apex.oracle.com/pls/apex/www/ws/menu/1/0";
+	let xmlhttp = new XMLHttpRequest();
+	let url = "https://apex.oracle.com/pls/apex/www/ws/menu/" + id_menu;
 	xmlhttp.onreadystatechange = function() {
 		console.log(this.status);
     	if (this.readyState == 4 && this.status == 200) {
 			console.log(this.responseText);
-        	var myArr = JSON.parse(this.responseText);
-        	myFunction(myArr.items);
+        	let arr = JSON.parse(this.responseText);
+        	buildItems(id_menu, arr.items);
     	}
 	};
 	xmlhttp.open("GET", url, true);
 	xmlhttp.send();
 }
-function myFunction(arr) {
-    var out = "";
-    var i;
+/*
+function loadTreeLevel(id_menu, id_parent, tree_level) {
+	let xmlhttp = new XMLHttpRequest();
+	let url = "https://apex.oracle.com/pls/apex/www/ws/menu/" + id_menu + "/" + id_parent + "/" + tree_level;
+	console.log("### "+url);
+	xmlhttp.onreadystatechange = function() {
+		console.log(this.status);
+    	if (this.readyState == 4 && this.status == 200) {
+			console.log(this.responseText);
+        	let arr = JSON.parse(this.responseText);
+        	//buildItems(id_menu, arr.items);
+    	}
+	};
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
+}
+*/
+function buildItems(id_menu, arr) {
+    let out = "<ul id='menu' class='a'>";
+    let i;
     for(i = 0; i < arr.length; i++) {
-		console.log(arr[i].description);
-        out += '<a href="' + arr[i].id + '">' + 
-        arr[i].description + '</a><br>';
+
+		if (arr[i].tree_level === 1) {
+			out += '<ul>';
+		}
+        out += '<li><a id="' + arr[i].id + '" href="#" onclick="menuitem(this)">' + arr[i].description + '</a></li>';
+		//loadTreeLevel(id_menu, arr[i].id_parent, arr[i].tree_level);
+		//break;
+		if (arr[i].tree_level === 2) {
+			out += '</ul>';
+		}
     }
+	out += "</ul>";
     document.getElementById("dv").innerHTML = out;
 }
 
