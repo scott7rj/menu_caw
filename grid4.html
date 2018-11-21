@@ -193,48 +193,44 @@ function loadMenu(id_menu) {
 	xmlhttp.onreadystatechange = function() {
 		console.log(this.status);
     	if (this.readyState == 4 && this.status == 200) {
-			console.log(this.responseText);
+			//console.log(this.responseText);
         	let arr = JSON.parse(this.responseText);
-        	buildItems(id_menu, arr.items);
+        	document.getElementById("dv").innerHTML = buildItems(id_menu, arr.items);
     	}
 	};
 	xmlhttp.open("GET", url, true);
 	xmlhttp.send();
 }
-/*
-function loadTreeLevel(id_menu, id_parent, tree_level) {
-	let xmlhttp = new XMLHttpRequest();
-	let url = "https://apex.oracle.com/pls/apex/www/ws/menu/" + id_menu + "/" + id_parent + "/" + tree_level;
-	console.log("### "+url);
-	xmlhttp.onreadystatechange = function() {
-		console.log(this.status);
-    	if (this.readyState == 4 && this.status == 200) {
-			console.log(this.responseText);
-        	let arr = JSON.parse(this.responseText);
-        	//buildItems(id_menu, arr.items);
-    	}
-	};
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
-}
-*/
 function buildItems(id_menu, arr) {
     let out = "<ul id='menu' class='a'>";
-    let i;
-    for(i = 0; i < arr.length; i++) {
+	let i, current;
+	
 
-		if (arr[i].tree_level === 1) {
-			out += '<ul>';
+    for(i = 0; i < arr.length; i++) {
+		/*
+		console.log('arr['+i+'].tree_level:' + arr[i].tree_level);
+		if (i == 0) {
+			current = arr[i].tree_level;
+		} else {
+			if (current !== arr[i-1].tree_level) {
+				console.log('mudou!' + arr[i].description);
+				current = arr[i].tree_level;
+			}
+
 		}
-        out += '<li><a id="' + arr[i].id + '" href="#" onclick="menuitem(this)">' + arr[i].description + '</a></li>';
-		//loadTreeLevel(id_menu, arr[i].id_parent, arr[i].tree_level);
-		//break;
-		if (arr[i].tree_level === 2) {
-			out += '</ul>';
-		}
-    }
+		*/
+
+
+		out += '<li><a id="' + arr[i].id + '" href="#" onclick="menuitem(this)" class="' + arr[i].id_parent + '_' + arr[i].tree_level + '">' + 
+			arr[i].id + ':' + 
+			arr[i].description + ':' + 
+			arr[i].tree_level + ':' +
+			'</a></li>';
+
+	
+	}
 	out += "</ul>";
-    document.getElementById("dv").innerHTML = out;
+	return out;
 }
 
 
@@ -253,6 +249,13 @@ function reconfigure(layout) {
 	//grid-template-columns: repeat(auto-fill, minmax(500px,1fr));
 }
 function menuitem(obj) {
+	let arr;
+	
+	arr = obj.getElementsByTagName(obj.id_parent + '_' + obj.tree_level);
+	console.log(obj.id + ' : ' + arr.length);
+}
+/*
+function menuitem(obj) {
 	var ul;
 	ul = document.getElementById("ul_"+obj.id);
 	console.log(obj.innerHTML + ' ' + obj.id + ' ' + ul.style.display);
@@ -263,6 +266,7 @@ function menuitem(obj) {
 		ul.style.display = 'block';
 	}
 }
+*/
 function search() {
 	var input, filter, ul, li, a, i, div;
 	const ALL = 'ALL';

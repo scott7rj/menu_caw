@@ -60,8 +60,6 @@ INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT, TREE_LEVEL, SEQ) VALUES('
 /
 INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT, TREE_LEVEL, SEQ) VALUES('Migração',1,0,0,15)
 /
-INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT, TREE_LEVEL, SEQ) VALUES('Teste FSW',1,0,0,16)
-/
 --level 1
 --conta/contrato
 	INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('Informações do Contrato',1,1,1,1)
@@ -314,6 +312,13 @@ INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT, TREE_LEVEL, SEQ) VALUES('
 INSERT INTO ITEM_MENU(DESCRIPTION, ID_MENU, ID_PARENT,TREE_LEVEL, SEQ) VALUES('',1,,2,)
 /
 
+--CONNECT BY, WORKS!!!
+SELECT id, description, id_parent, tree_level FROM item_menu
+CONNECT BY PRIOR id = id_parent
+ORDER SIBLINGS BY seq;
+
+
+
 
 --teste proc
 BEGIN
@@ -346,10 +351,10 @@ END;
 
 
 
-1.Conta/Contrato
----17.Informações do Contrato
----18.Informações do Contrato em Data Anterior
----19.Situação
+1.Conta/Contrato 1 0 1
+---17.Informações do Contrato 1 1 1
+---18.Informações do Contrato em Data Anterior 1 1 2
+---19.Situação 1 1 3
 ---20.Numeração Contas Migradas
 ------100.Conta SIDEC a partir da Conta NSGD
 ------101.Conta NSGD a partir da Conta SIDEC
