@@ -203,30 +203,31 @@ function loadMenu(id_menu) {
 }
 function buildItems(id_menu, arr) {
     let out = "<ul id='menu' class='a'>";
-	let i, current;
-	
-
+	let i; 
+	let url = '';
+	let id_aux, params;
+	let mudou = false;
     for(i = 0; i < arr.length; i++) {
-		/*
-		console.log('arr['+i+'].tree_level:' + arr[i].tree_level);
-		if (i == 0) {
-			current = arr[i].tree_level;
-		} else {
-			if (current !== arr[i-1].tree_level) {
-				console.log('mudou!' + arr[i].description);
-				current = arr[i].tree_level;
+		url = arr[i].url;
+		id_aux = arr[i].id_parent;
+		if (i < arr.length-1) {
+			if (arr[i].tree_level > 0 && arr[i].tree_level != arr[i+1].tree_level) {
+				id_aux = arr[i].id;
+				out += '<ul>';
 			}
-
 		}
-		*/
-
-
-		out += '<li><a id="' + arr[i].id + '" href="#" onclick="menuitem(this)" class="' + arr[i].id_parent + '_' + arr[i].tree_level + '">' + 
+		params = arr[i].id + ',' + arr[i].id_parent + ',' + arr[i].tree_level + ',' + arr[i].seq + ',' + arr[i].children + ',' + arr[i].active + ',\'' + arr[i].description + '\'';
+		out += '<li><a id="' + arr[i].id + '" href="' + arr[i].url + '" onclick="menuitem(' + params + ')" class="link_' + id_aux + '">' + 
 			arr[i].id + ':' + 
 			arr[i].description + ':' + 
 			arr[i].tree_level + ':' +
 			'</a></li>';
 
+		if (i > 0) {
+			if (arr[i].tree_level > 0 && arr[i].tree_level != arr[i-1].tree_level) {
+				out += '</ul>';
+			}
+		}
 	
 	}
 	out += "</ul>";
@@ -248,11 +249,8 @@ function reconfigure(layout) {
 	$("#menu").hide();
 	//grid-template-columns: repeat(auto-fill, minmax(500px,1fr));
 }
-function menuitem(obj) {
-	let arr;
-	
-	arr = obj.getElementsByTagName(obj.id_parent + '_' + obj.tree_level);
-	console.log(obj.id + ' : ' + arr.length);
+function menuitem(id, id_parent, tree_level, seq, children, active, description) {
+	console.log(id + ',' + id_parent + ',' + tree_level + ',' + seq + ',' + children + ',' + active + ',' + description);
 }
 /*
 function menuitem(obj) {
