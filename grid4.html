@@ -214,13 +214,13 @@ function buildItems(id_menu, arr) {
     for(i = 0; i < arr.length; i++) {
 		url = arr[i].url;
 		father = arr[i].father;
-		if (father == 0) {
-			classname = arr[i].id;
+		if (arr[i].children > 0) {
+			classname = "x_" + arr[i].id;
 		} else {
-			classname = arr[i].id_parent;
+			classname = "x_" + arr[i].id_parent;
 		}
 		params = arr[i].id + ',' + arr[i].id_parent + ',' + arr[i].tree_level + ',' + arr[i].seq + ',' + arr[i].children + ',' + arr[i].father + ',\'' + arr[i].description + '\'';
-		out += '<li><a id="' + arr[i].id + '" href="' + url + '" onclick="menuitem(' + params + ')" class="x_' + classname + '">' + 
+		out += '<li><a id="' + arr[i].id + '" href="' + url + '" onclick="menuitem(' + params + ')" class="' + classname + '">' + 
 			arr[i].description + ':' + 
 			//arr[i].id + ':' + 
 			//arr[i].id_parent + ':' +
@@ -250,12 +250,15 @@ function reconfigure(layout) {
 }
 function menuitem(id, id_parent, seq, tree_level, children, father, description) {
 	let cl = "x_";
+	let i;
 	console.log(description + ' ' + children);
 	//console.log(document.getElementsByClassName("x_1").length);
 	if (children > 0) {
-		cl += (id+1);
+		cl += id;
 		console.log(cl);
-		document.getElementsByClassName(cl)[1].style.border = "2px solid red";
+		for (i = 1; i<document.getElementsByClassName(cl).length; i++) {
+			document.getElementsByClassName(cl)[i].style.border = "2px solid red";
+		}
 	}
 }
 /*
