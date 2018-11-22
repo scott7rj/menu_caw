@@ -104,6 +104,9 @@ ul.b > li:hover {
 	cursor: pointer;
 	color: crimson;
 }
+.x_1 {
+	border: 1px solid cyan;
+}
 </style>
 </head>
 <body>
@@ -205,30 +208,26 @@ function buildItems(id_menu, arr) {
     let out = "<ul id='menu' class='a'>";
 	let i; 
 	let url = '';
-	let id_aux, params;
-	let mudou = false;
+	let params;
+	let father = 0;
+	let classname = '';
     for(i = 0; i < arr.length; i++) {
 		url = arr[i].url;
-		id_aux = arr[i].id_parent;
-		if (i < arr.length-1) {
-			if (arr[i].tree_level > 0 && arr[i].tree_level != arr[i+1].tree_level) {
-				id_aux = arr[i].id;
-				out += '<ul>';
-			}
+		father = arr[i].father;
+		if (father == 0) {
+			classname = arr[i].id;
+		} else {
+			classname = arr[i].id_parent;
 		}
-		params = arr[i].id + ',' + arr[i].id_parent + ',' + arr[i].tree_level + ',' + arr[i].seq + ',' + arr[i].children + ',' + arr[i].active + ',\'' + arr[i].description + '\'';
-		out += '<li><a id="' + arr[i].id + '" href="' + arr[i].url + '" onclick="menuitem(' + params + ')" class="link_' + id_aux + '">' + 
-			arr[i].id + ':' + 
+		params = arr[i].id + ',' + arr[i].id_parent + ',' + arr[i].tree_level + ',' + arr[i].seq + ',' + arr[i].children + ',' + arr[i].father + ',\'' + arr[i].description + '\'';
+		out += '<li><a id="' + arr[i].id + '" href="' + url + '" onclick="menuitem(' + params + ')" class="x_' + classname + '">' + 
 			arr[i].description + ':' + 
+			//arr[i].id + ':' + 
+			//arr[i].id_parent + ':' +
 			arr[i].tree_level + ':' +
+			//arr[i].children + ':' +
 			'</a></li>';
-
-		if (i > 0) {
-			if (arr[i].tree_level > 0 && arr[i].tree_level != arr[i-1].tree_level) {
-				out += '</ul>';
-			}
-		}
-	
+		
 	}
 	out += "</ul>";
 	return out;
@@ -249,8 +248,11 @@ function reconfigure(layout) {
 	$("#menu").hide();
 	//grid-template-columns: repeat(auto-fill, minmax(500px,1fr));
 }
-function menuitem(id, id_parent, tree_level, seq, children, active, description) {
-	console.log(id + ',' + id_parent + ',' + tree_level + ',' + seq + ',' + children + ',' + active + ',' + description);
+function menuitem(id, id_parent, tree_level, children, father, description) {
+	//console.log(description + ': children:' + children + ' father:' + father + ' tree_level:' + tree_level);
+	//console.log(document.getElementsByClassName("x_1").length);
+	
+	document.getElementsByClassName("x_1")[1].style.border = "thin dotted red";
 }
 /*
 function menuitem(obj) {

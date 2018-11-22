@@ -324,14 +324,17 @@ ORDER SIBLINGS BY seq;
 
 -- CONNECT BY refinado
 SELECT a.id AS id, 
-a.description AS descritpion, 
+a.description AS description, 
 a.id_parent AS id_parent, 
 a.tree_level AS tree_level, 
-(select 
-count(*) from item_menu b where b.id_parent=a.id) AS children
+a.url AS url, 
+a.active AS active, 
+(select count(*) from item_menu b where b.id_parent=a.id) AS children,
+(select count(*) from item_menu c where c.id=a.id_parent) AS father
 FROM item_menu a
+WHERE a.id_menu = :id_menu
 CONNECT BY PRIOR a.id = a.id_parent
-ORDER SIBLINGS BY a.seq;
+ORDER SIBLINGS BY a.seq
 
 --teste proc
 BEGIN
