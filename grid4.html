@@ -248,11 +248,15 @@ function reconfigure(layout) {
 	$("#menu").hide();
 	//grid-template-columns: repeat(auto-fill, minmax(500px,1fr));
 }
-function menuitem(id, id_parent, tree_level, children, father, description) {
-	//console.log(description + ': children:' + children + ' father:' + father + ' tree_level:' + tree_level);
+function menuitem(id, id_parent, seq, tree_level, children, father, description) {
+	let cl = "x_";
+	console.log(description + ' ' + children);
 	//console.log(document.getElementsByClassName("x_1").length);
-	
-	document.getElementsByClassName("x_1")[1].style.border = "thin dotted red";
+	if (children > 0) {
+		cl += (id+1);
+		console.log(cl);
+		document.getElementsByClassName(cl)[1].style.border = "2px solid red";
+	}
 }
 /*
 function menuitem(obj) {
