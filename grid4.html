@@ -257,7 +257,11 @@ function menuitem(id, id_parent, seq, tree_level, children, father, description)
 		cl += id;
 		console.log(cl);
 		for (i = 1; i<document.getElementsByClassName(cl).length; i++) {
-			document.getElementsByClassName(cl)[i].style.border = "2px solid red";
+			if (document.getElementsByClassName(cl)[i].style.border === "1px solid red") {
+				document.getElementsByClassName(cl)[i].style.border = "1px solid transparent";
+			} else {
+				document.getElementsByClassName(cl)[i].style.border = "1px solid red";
+			}
 		}
 	}
 }
