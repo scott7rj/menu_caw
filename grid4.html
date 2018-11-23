@@ -120,7 +120,7 @@ ul.b > li:hover {
 	<div id="user" clearable="t"></div>
 	<div id="search" clearable="t">
 		<input type="text" id="txtShortcut_FyeWgJ" size="12" maxlength="12" onkeyup="" placeholder="shortcut...">
-		<input type="text" id="txtSearch_FyeWgJ" size="30" maxlength="100" onkeyup="search()" placeholder="search...">
+		<input type="text" id="txtSearch_FyeWgJ" size="30" maxlength="100" onkeyup="searchMenu()" placeholder="search...">
 		<div id="searchresults" clearable="t">
 			<ul id="menu" class="a">
 				<li>
@@ -265,19 +265,6 @@ function menuitem(id, id_parent, seq, tree_level, children, father, description)
 		}
 	}
 }
-/*
-function menuitem(obj) {
-	var ul;
-	ul = document.getElementById("ul_"+obj.id);
-	console.log(obj.innerHTML + ' ' + obj.id + ' ' + ul.style.display);
-	
-	if (ul.style.display === 'block' || ul.style.display === '') {
-		ul.style.display = 'none';
-	} else {
-		ul.style.display = 'block';
-	}
-}
-*/
 function search() {
 	var input, filter, ul, li, a, i, div;
 	const ALL = 'ALL';
@@ -316,8 +303,43 @@ function search() {
 			}
 		}
 	}
+	//$("#menu").show();
+}
+
+function searchMenu() {
+	var input, filter, ul, li, a, i, div;
+	const ALL = 'ALL';
+	input = document.getElementById("txtSearch_FyeWgJ");
+	filter = input.value.toUpperCase();
+	div = document.getElementById("dv");
+	li = div.getElementsByTagName("li");
+
+	//if (filter === '') {
+	//	$("#menu").hide();
+	//	return;
+	//}
+	if (filter === ALL) {
+		console.log('show all');
+		for (i = 0; i < li.length; i++) {
+			li[i].style.display = "";
+		}
+		return;
+	}
+	for (i = 0; i < li.length; i++) {
+		if (filter === '') {
+			li[i].style.display = "";
+		} else {
+			a = li[i].getElementsByTagName("a")[0];
+			if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+				li[i].style.display = "";
+			} else {
+				li[i].style.display = "none";
+			}
+		}
+	}
 	$("#menu").show();
 }
+
 function logon() {
 	console.log('logon');
 }
