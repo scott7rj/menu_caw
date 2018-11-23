@@ -239,10 +239,10 @@ function buildItems(id_menu, arr) {
 		}
 		out += filler + '<a id="' + arr[i].id + '" href="' + url + '" onclick="menuitem(' + params + ')" class="' + classname + '">' + 
 			arr[i].description + ':' + 
-			//arr[i].id + ':' + 
 			//arr[i].id_parent + ':' +
 			arr[i].tree_level + ':' +
 			//arr[i].children + ':' +
+			arr[i].id + ':' + 
 			'</a><br />';
 		
 	}
@@ -329,8 +329,8 @@ function searchMenu() {
 	input = document.getElementById("txtSearch_FyeWgJ");
 	filter = input.value.toUpperCase();
 	div = document.getElementById("dv");
-	li = div.getElementsByTagName("li");
-
+	li = div.getElementsByTagName("a");
+	console.log(filter + ' - ' + li.length);
 	if (filter === '') {
 		for (i = 0; i < li.length; i++) {
 			li[i].style.display = "none";
@@ -348,7 +348,7 @@ function searchMenu() {
 			li[i].style.display = "";
 		} else {
 			a = li[i].getElementsByTagName("a")[0];
-			if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+			if (li[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
 				li[i].style.display = "";
 			} else {
 				li[i].style.display = "none";
