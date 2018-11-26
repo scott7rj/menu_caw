@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+span {
+  display: block;
+}
+span a {
+  border-width: 1px;
+  border-style: solid;
+  border-color: red;
+}
+</style>
+</head>
+<body>
+
+<h2>class teste</h2>
+<div id="menu">
+  <span class="lvl1 p1"><a href="#" onclick="itemmenu(this)">pai1</a></span>
+
+  <span class="lvl2 p1flh1"><a href="#" onclick="itemmenu(this)">-----filho1</a></span>
+  <span class="lvl3 p1flh1net1"><a href="#" onclick="itemmenu(this)">----------neto1</a></span>
+
+  <span class="lvl2 p1flh2"><a href="#" onclick="itemmenu(this)">-----filho2</a></span>
+  <span class="lvl3 p1flh2net2"><a href="#" onclick="itemmenu(this)">----------neto2</a></span>
+  <span class="lvl3 p1flh2net3"><a href="#" onclick="itemmenu(this)">----------neto3</a></span>
+
+
+  <span class="lvl1 p2"><a href="#" onclick="itemmenu(this)">pai2</a></span>
+
+  <span class="lvl2 p2flh3"><a href="#" onclick="itemmenu(this)">-----filho3</a></span>
+
+  <span class="lvl2 p2flh4"><a href="#" onclick="itemmenu(this)">-----filho4</a></span>
+  <span class="lvl3 p2flh4net5"><a href="#" onclick="itemmenu(this)">----------neto5</a></span>
+
+</div>
+<script src="js/lib/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script>
+function toggle(obj) {
+  if (obj.style.borderColor === 'red') {
+    obj.style.borderColor = 'green';
+  } else {
+    obj.style.borderColor = 'red';
+  }
+}
+
+function itemmenu(obj) {
+  let arr, i, menu;
+  menu = document.getElementById("menu");
+
+  arr = obj.parentNode.className.split(" ");
+
+  if (obj.parentNode.className.indexOf('lvl1') > -1) {
+
+    for (i = 0; i<menu.getElementsByTagName("span").length; i++) {
+      if(obj.parentNode.className !==  menu.getElementsByTagName("span")[i].className && 
+          menu.getElementsByTagName("span")[i].className.split(" ")[1].indexOf(arr[1]) > -1) {
+        console.log(menu.getElementsByTagName("span")[i].className);
+        toggle(menu.getElementsByTagName("span")[i].getElementsByTagName("a")[0]);
+      }
+    }
+
+  } else if (obj.parentNode.className.indexOf('lvl2') > -1) {
+
+    for (i = 0; i<menu.getElementsByTagName("span").length; i++) {
+      if(obj.parentNode.className !==  menu.getElementsByTagName("span")[i].className && 
+          menu.getElementsByTagName("span")[i].className.split(" ")[1].indexOf(arr[1]) > -1) {
+        console.log(menu.getElementsByTagName("span")[i].className);
+        toggle(menu.getElementsByTagName("span")[i].getElementsByTagName("a")[0]);
+      }
+    }
+
+  } else if (obj.parentNode.className.indexOf('lvl3') > -1) {
+    console.log("# level 3");
+  }
+}
+
+$(document).ready(function(){
+  let menu, i;
+
+  menu = document.getElementById("menu");
+  for (i = 0; i<menu.getElementsByTagName("span").length; i++) {
+    menu.getElementsByTagName("span")[i].getElementsByTagName("a")[0].style.borderColor = 'red';
+  }
+
+});
+</script>
+</body>
+</html>
