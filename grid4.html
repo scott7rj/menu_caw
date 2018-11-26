@@ -120,7 +120,7 @@ ul.b > li:hover {
 	<div id="user" clearable="t"></div>
 	<div id="search" clearable="t">
 		<input type="text" id="txtShortcut_FyeWgJ" size="12" maxlength="12" onkeyup="" placeholder="shortcut...">
-		<input type="text" id="txtSearch_FyeWgJ" size="30" maxlength="100" onkeyup="search()" placeholder="search...">
+		<input type="text" id="txtSearch_FyeWgJ" size="30" maxlength="100" onkeyup="searchMenu()" placeholder="search...">
 		<div id="searchresults" clearable="t">
 			<ul id="menu" class="a">
 				<li>
@@ -196,8 +196,9 @@ function loadMenu(id_menu) {
 	xmlhttp.onreadystatechange = function() {
 		console.log(this.status);
     	if (this.readyState == 4 && this.status == 200) {
-			//console.log(this.responseText);
+			console.log(this.responseText);
         	let arr = JSON.parse(this.responseText);
+			console.log('#arr.length: ' + arr.items.length);
         	document.getElementById("dv").innerHTML = buildItems(id_menu, arr.items);
     	}
 	};
@@ -205,31 +206,47 @@ function loadMenu(id_menu) {
 	xmlhttp.send();
 }
 function buildItems(id_menu, arr) {
-    let out = "<ul id='menu' class='a'>";
+    console.log('arr.length: ' + arr.length);
+	let out = '';
 	let i; 
 	let url = '';
 	let params;
-	let father = 0;
+	//let father = 0;
 	let classname = '';
+	let filler = '';
     for(i = 0; i < arr.length; i++) {
 		url = arr[i].url;
-		father = arr[i].father;
+		//father = arr[i].father;
 		if (arr[i].children > 0) {
 			classname = "x_" + arr[i].id;
 		} else {
 			classname = "x_" + arr[i].id_parent;
 		}
-		params = arr[i].id + ',' + arr[i].id_parent + ',' + arr[i].tree_level + ',' + arr[i].seq + ',' + arr[i].children + ',' + arr[i].father + ',\'' + arr[i].description + '\'';
-		out += '<li><a id="' + arr[i].id + '" href="' + url + '" onclick="menuitem(' + params + ')" class="' + classname + '">' + 
+		params = arr[i].id + ',' + arr[i].id_parent + ',' + arr[i].tree_level + ',' + arr[i].seq + ',' + arr[i].children + ',\'' + arr[i].description + '\'';
+		switch (arr[i].tree_level) {
+			case 1:
+				filler = '-----';
+				break;
+			case 2:
+				filler = '----------';
+				break;
+			case 3:
+				filler = '---------------';
+				break;
+			default:
+				filler = '';
+				break;
+		}
+		out += filler + '<a id="' + arr[i].id + '" href="' + url + '" onclick="menuitem(' + params + ')" class="' + classname + '">' + 
 			arr[i].description + ':' + 
-			//arr[i].id + ':' + 
 			//arr[i].id_parent + ':' +
 			arr[i].tree_level + ':' +
 			//arr[i].children + ':' +
-			'</a></li>';
+			arr[i].id + ':' + 
+			'</a><br />';
 		
 	}
-	out += "</ul>";
+	out += "";
 	return out;
 }
 
@@ -248,7 +265,7 @@ function reconfigure(layout) {
 	$("#menu").hide();
 	//grid-template-columns: repeat(auto-fill, minmax(500px,1fr));
 }
-function menuitem(id, id_parent, seq, tree_level, children, father, description) {
+function menuitem(id, id_parent, seq, tree_level, children, description) {
 	let cl = "x_";
 	let i;
 	console.log(description + ' ' + children);
@@ -265,19 +282,6 @@ function menuitem(id, id_parent, seq, tree_level, children, father, description)
 		}
 	}
 }
-/*
-function menuitem(obj) {
-	var ul;
-	ul = document.getElementById("ul_"+obj.id);
-	console.log(obj.innerHTML + ' ' + obj.id + ' ' + ul.style.display);
-	
-	if (ul.style.display === 'block' || ul.style.display === '') {
-		ul.style.display = 'none';
-	} else {
-		ul.style.display = 'block';
-	}
-}
-*/
 function search() {
 	var input, filter, ul, li, a, i, div;
 	const ALL = 'ALL';
@@ -318,6 +322,42 @@ function search() {
 	}
 	$("#menu").show();
 }
+
+function searchMenu() {
+	let input, filter, ul, li, a, i, div;
+	const ALL = 'ALL';
+	input = document.getElementById("txtSearch_FyeWgJ");
+	filter = input.value.toUpperCase();
+	div = document.getElementById("dv");
+	li = div.getElementsByTagName("a");
+	console.log(filter + ' - ' + li.length);
+	if (filter === '') {
+		for (i = 0; i < li.length; i++) {
+			li[i].style.display = "none";
+		}
+	}
+	if (filter === ALL) {
+		console.log('show all');
+		for (i = 0; i < li.length; i++) {
+			li[i].style.display = "";
+		}
+		return;
+	}
+	for (i = 0; i < li.length; i++) {
+		if (filter === '') {
+			li[i].style.display = "";
+		} else {
+			a = li[i].getElementsByTagName("a")[0];
+			if (li[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+				li[i].style.display = "";
+			} else {
+				li[i].style.display = "none";
+			}
+		}
+	}
+	//$("#menu").show();
+}
+
 function logon() {
 	console.log('logon');
 }
