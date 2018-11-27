@@ -33,13 +33,7 @@ ul {
 	overflow: auto;
 	width: 100%;
 }
-#searchresults {
-	padding: 0.1em;
-	height: 100%;
-	overflow: auto;
-}
-
-#txtSearch_FyeWgJ {
+#txtSearch {
     background-image: url('img/search.svg');
     position: left;
     background-size: 15px;
@@ -71,18 +65,21 @@ input[type="text"], input[type="email"], select, input[type="password"] {
    width: 200px;
 }
 .app-btn:hover {
-    background-color: #777777;
+	background-color: #777777;
+	cursor: pointer;
 }
 .app-btn:focus {
-    background-color: #777777;
+	background-color: #777777;
+	cursor: pointer;
 }
 </style>
 </head>
 <body>
 <div class="wrapper">
 	<div id="search">
+		<h2>POC Menu Camada acessando Oracle Cloud</h2>
 		<button class="app-btn" value="load" onclick="loadMenu(1)">LOAD MENU</button><br />
-		<input type="text" id="txtSearch_FyeWgJ" size="30" maxlength="100" onkeyup="searchMenu()" placeholder="search...">
+		<input type="text" id="txtSearch" size="30" maxlength="100" onkeyup="searchMenu()" placeholder="search...">
 	</div>
 	<div id="dv"></div>
 </div>
@@ -188,7 +185,7 @@ function buildItems(id_menu, arr) {
 function searchMenu() {
 	let input, filter, ul, li, a, i, div;
 	const ALL = 'ALL';
-	input = document.getElementById("txtSearch_FyeWgJ");
+	input = document.getElementById("txtSearch");
 	filter = input.value.toUpperCase();
 	div = document.getElementById("dv");
 	li = div.getElementsByTagName("li");
@@ -217,15 +214,11 @@ function searchMenu() {
 }
 
 $( document ).ready(function() {
-    $('#txtSearch_FyeWgJ').focus();
-    $("#searchresults").hide();
+    $('#txtSearch').focus();
     $(document).keypress(function(e) {
         if(e.which == 13) {
-            if($('#txtShortcut_FyeWgJ').is(':focus') == true) {
-            	$('#txtShortcut_FyeWgJ').val('');
-            }
-            if($('#txtSearch_FyeWgJ').is(':focus') == true) {
-            	$('#txtSearch_FyeWgJ').val('');
+            if($('#txtSearch').is(':focus') == true) {
+            	$('#txtSearch').val('');
             }
         }
     });
