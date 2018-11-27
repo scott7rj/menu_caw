@@ -17,6 +17,12 @@ body {
 	background-color: #555555;
 	font-size: 0.75em;
 }
+span {
+	display: block;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+}
 .wrapper {
 	font-size: 1.0em;
 	display: grid;
@@ -81,31 +87,6 @@ body {
     background-size: 15px;
     background-repeat: no-repeat;
     padding-left: 1.5em;
-}
-ul {
-	list-style-type: circle;
-	padding: 0em 0em 0em 1.8em;
-}
-ul.a {
-	margin: 0.2em;
-	padding: 0em 0em 0em 1.5em;
-	background: #ccc;
-}
-ul.a > li > label:hover {
-	cursor: pointer;
-	color: crimson;
-}
-ul.b {
-	margin: 0.2em;
-	padding: 0em 0em 0em 1.5em;
-	display: none;
-}
-ul.b > li:hover {
-	cursor: pointer;
-	color: crimson;
-}
-.x_1 {
-	border: 1px solid cyan;
 }
 </style>
 </head>
@@ -193,36 +174,80 @@ function loadMenu(id_menu) {
 	console.log('load');
 	let xmlhttp = new XMLHttpRequest();
 	let url = "https://apex.oracle.com/pls/apex/www/ws/menu/" + id_menu;
+	
 	xmlhttp.onreadystatechange = function() {
 		console.log(this.status);
     	if (this.readyState == 4 && this.status == 200) {
 			//console.log(this.responseText);
+			let menu, i;
         	let arr = JSON.parse(this.responseText);
 			//console.log('#arr.length: ' + arr.items.length);
-        	document.getElementById("dv").innerHTML = buildItems(id_menu, arr.items);
+			menu = document.getElementById("dv");
+        	menu.innerHTML = buildItems(id_menu, arr.items);
+			//console.log('menu.getElementsByTagName("span").length: ' + menu.getElementsByTagName("span").length);
+  			for (i = 0; i<menu.getElementsByTagName("span").length; i++) {
+				if (menu.getElementsByTagName("span")[i].getElementsByTagName("a")[0].getAttribute('tree') === '0' ||
+					menu.getElementsByTagName("span")[i].getElementsByTagName("a")[0].getAttribute('tree') === '1') {
+					menu.getElementsByTagName("span")[i].style.display = '';
+				} else {
+					menu.getElementsByTagName("span")[i].style.display = 'none';
+				}
+  			}
+
     	}
 	};
 	xmlhttp.open("GET", url, true);
 	xmlhttp.send();
 }
+function toggle(arr) {
+	let i;
+	console.log(arr[1].childNode);
+	for (i = 1; i < arr.length; i++) {
+		if (arr[i].parentNode.style.display === 'none') {
+			arr[i].parentNode.style.display = '';
+		} else {
+			arr[i].parentNode.style.display = 'none';
+		}
+	}
+}
+function menuitem(id, id_parent, seq, tree_level, children, path, description, url) {
+	menu = document.getElementById("dv");
+	let arr = dv.querySelectorAll("a[class^='" + path + "']");
+	toggle(arr);
+}
 function buildItems(id_menu, arr) {
-    //console.log('arr.length: ' + arr.length);
 	let out = '';
 	let i; 
 	let url = '';
 	let params;
-	//let father = 0;
-	let classname = '';
 	let filler = '';
     for(i = 0; i < arr.length; i++) {
 		url = arr[i].url;
-		//father = arr[i].father;
-		if (arr[i].children > 0) {
-			classname = "x_" + arr[i].id;
-		} else {
-			classname = "x_" + arr[i].id_parent;
-		}
-		params = arr[i].id + ',' + arr[i].id_parent + ',' + arr[i].tree_level + ',' + arr[i].seq + ',' + arr[i].children + ',\'' + arr[i].description + '\'';
+		params = arr[i].id + ',' + 
+			arr[i].id_parent + ',' + 
+			arr[i].tree_level + ',' + 
+			arr[i].seq + ',' + 
+			arr[i].children + ',\'' + 
+			arr[i].path + '\',\'' + 
+			arr[i].description + '\',\'' +
+			arr[i].url + '\'';
+/*
+<ul id="menu" class="a">
+	<li>
+		<a href="#" id="01" onclick="menuitem(this)">Conta/Contrato</a>
+		<ul id="ul_01">
+			<li><a href="#">Informações do Contrato</a></li>
+			<li><a href="#">Informações do Contrato em Data Anterior</a></li>
+			<li><a href="#">Situação</a></li>
+			<li><a href="#" id="01_01" onclick="menuitem(this)">Numeração Contas Migradas</a>
+				<ul id="ul_01_01">
+					<li><a href="#" onclick="go(this)" layout="3rows">Conta SIDEC a partir da Conta NSGD</a></li>
+					<li><a href="#" onclick="go(this)" layout="2rows">Conta NSGD a partir da Conta SIDEC</a></li>    
+				</ul>
+			</li>
+*/
+		if (arr[i+1] != undefined)
+			console.log('tree: ' + arr[i].tree_level + ' next tree: '  + arr[i+1].tree_level);
 		switch (arr[i].tree_level) {
 			case 1:
 				filler = '-----';
@@ -237,16 +262,11 @@ function buildItems(id_menu, arr) {
 				filler = '';
 				break;
 		}
-		out += "<span>";
-		out += filler + '<a id="' + arr[i].id + '" href="' + url + '" onclick="menuitem(' + params + ')" class="' + classname + '">' + 
-			arr[i].description + ':' + 
-			//arr[i].id_parent + ':' +
-			arr[i].tree_level + ':' +
-			//arr[i].children + ':' +
-			arr[i].id + ':' + 
-			'</a><br />';
-		out += "</span>";
-		
+		out += '<span>';
+		out += filler + '<a id="' + arr[i].id + '" href="#" onclick="menuitem(' + params + ')" class="' + arr[i].path + '" tree="' + arr[i].tree_level + '">' + 
+			arr[i].description + 
+			'</a>';
+		out += '</span>';
 	}
 	out += "";
 	return out;
@@ -266,28 +286,6 @@ function reconfigure(layout) {
 	$('#txtSearch_FyeWgJ').val('');
 	$("#menu").hide();
 	//grid-template-columns: repeat(auto-fill, minmax(500px,1fr));
-}
-function menuitem(id, id_parent, seq, tree_level, children, description) {
-	let cl = "x_";
-	let i;
-	console.log(description + ' ' + children);
-	//console.log(document.getElementsByClassName("x_1").length);
-	if (children > 0) {
-		cl += id;
-		console.log(cl);
-		for (i = 1; i<document.getElementsByClassName(cl).length; i++) {
-			if (document.getElementsByClassName(cl)[i].parentNode.style.display === 'none')
-				document.getElementsByClassName(cl)[i].parentNode.style.display = '';
-			else 
-				document.getElementsByClassName(cl)[i].parentNode.style.display = 'none';
-
-			//if (document.getElementsByClassName(cl)[i].style.border === "1px solid red") {
-			//	document.getElementsByClassName(cl)[i].style.border = "1px solid transparent";
-			//} else {
-			//	document.getElementsByClassName(cl)[i].style.border = "1px solid red";
-			//}
-		}
-	}
 }
 function search() {
 	var input, filter, ul, li, a, i, div;
@@ -395,7 +393,6 @@ $( document ).ready(function() {
             }
         }
     });
-    
 });
 </script>
 </body>

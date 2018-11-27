@@ -343,10 +343,11 @@ a.id_parent AS id_parent,
 a.tree_level AS tree_level, 
 a.url AS url, 
 a.active AS active,
-(select count(b.id) from item_menu b where b.id_parent=a.id) AS children
+(select count(b.id) from item_menu b where b.id_parent=a.id) AS children,
+SYS_CONNECT_BY_PATH(a.id, '$') AS path
 FROM item_menu a
 WHERE a.id_menu = 1
-START WITH a.id = 2
+START WITH a.id = 1
 CONNECT BY PRIOR a.id = a.id_parent
 ORDER SIBLINGS BY a.seq
 
