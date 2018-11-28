@@ -5,25 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>css grid 1</title>
 <style>
+/*
 * {
 	margin:0;
 	padding:0;
 }
+*/
 body {
 	background-color: #555555;
 	font-size: 0.9em;
 }
 ul {
-	padding: 0em 0em 0em 0.2em;
-	list-style-type: none;
-	list-style-position: outside;
-	width: 10em;
+	list-style-type: circle;
 }
 ul > li {
-	border: 1px solid red;
-	padding: 0em 0em 0em 0.5em;
-	display: inline-block;
+	padding: 0em 0em 0em 0em;
 }
+
 img {
 	margin: 0;
 	padding: 0;
@@ -33,7 +31,8 @@ img {
 	float: left;
 	width: 100%;
 }
-.wrapper > div {
+.wrapper div {
+	border: 1px solid black;
 	background: #aaaaaa;
 	padding: 0.2em;
 	overflow: auto;
@@ -103,7 +102,7 @@ input[type="text"], input[type="email"], select, input[type="password"] {
 	bottom: 1.4em;
 	left: 0;
 	position:absolute;
-	width: 45em;
+	width: 50em;
 	height: 40em;
 	z-index: 9998;
 	display: grid;
@@ -142,103 +141,6 @@ input[type="text"], input[type="email"], select, input[type="password"] {
 </div>
 <script src="js/lib/jquery-3.3.1.min.js" type="text/javascript"></script>
 <script>
-function resetMenu() {
-	let menu, i;
-	menu = document.getElementById("dv");
-	
-	for (i = 0; i<menu.getElementsByTagName("li").length; i++) {
-		if (menu.getElementsByTagName("li")[i].getElementsByTagName("a")[0].getAttribute('tree') === '0' ||
-			menu.getElementsByTagName("li")[i].getElementsByTagName("a")[0].getAttribute('tree') === '1') {
-			menu.getElementsByTagName("li")[i].style.display = '';
-		} else {
-			menu.getElementsByTagName("li")[i].style.display = 'none';
-		}
-	}
-}
-function loadMenu(id_menu) {
-	let xmlhttp = new XMLHttpRequest();
-	let url = "https://apex.oracle.com/pls/apex/www/ws/menu/" + id_menu;
-	
-	xmlhttp.onreadystatechange = function() {
-    	if (this.readyState == 4 && this.status == 200) {
-        	let arr = JSON.parse(this.responseText);
-			document.getElementById("dv").innerHTML = buildItems(id_menu, arr.items);
-			resetMenu();
-    	}
-	};
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
-}
-function toggle(arr) {
-	let i;
-	for (i = 1; i < arr.length; i++) {
-		if (arr[i].parentNode.style.display === 'none') {
-			arr[i].parentNode.style.display = '';
-		} else {
-			arr[i].parentNode.style.display = 'none';
-		}
-	}
-}
-function menuitem(id, id_parent, seq, tree_level, children, path, description, url) {
-	let menu = document.getElementById("dv");
-	let arr = dv.querySelectorAll("a[class^='" + path + "']");
-	toggle(arr);
-}
-function buildItems(id_menu, arr) {
-	let out = '';
-	let i; 
-	let url = '';
-	let params;
-	let filler = '';
-	let temqueabrirul = true;
-	let temquefecharul = false;
-	out = '<ul id="menu" class="a">';
-    for(i = 0; i < arr.length; i++) {
-		url = arr[i].url;
-		params = arr[i].id + ',' + 
-			arr[i].id_parent + ',' + 
-			arr[i].tree_level + ',' + 
-			arr[i].seq + ',' + 
-			arr[i].children + ',\'' + 
-			arr[i].path + '\',\'' + 
-			arr[i].description + '\',\'' +
-			arr[i].url + '\'';
-
-		if (temqueabrirul) {
-			out += '<ul><li>';
-		} else {
-			out += '<li>';
-		}
-		
-		out += '<a id="' + arr[i].id + '" href="#" onclick="menuitem(' + params + ')" class="' + arr[i].path + '" tree="' + arr[i].tree_level + '">' + 
-			arr[i].description + 
-			'</a>';
-
-		if (arr[i+1] != undefined) {
-			if (arr[i].tree_level < arr[i+1].tree_level) {
-				temqueabrirul = true;
-				temquefecharul = false;
-				continue;
-			} else if (arr[i].tree_level > arr[i+1].tree_level) {
-				temqueabrirul = false;
-				temquefecharul = true;
-			} else {
-				temqueabrirul = false;
-				temquefecharul = false;
-			}
-		} 
-
-		if (temquefecharul) {
-			out += '</li></ul>';
-		} else {
-			out += '</li>';
-		}
-
-	}
-	out += '</ul>';
-	return out;
-}
-
 function searchMenu() {
 	/*
 	let input, filter, ul, li, a, i, div;
@@ -271,17 +173,87 @@ function searchMenu() {
 	}
 	*/
 }
-function loadSessionMenu(id_menu) {
-	let xmlhttp = new XMLHttpRequest();
-	let url = "https://apex.oracle.com/pls/apex/www/ws/menu/" + id_menu;
-	
-	xmlhttp.onreadystatechange = function() {
-    	if (this.readyState == 4 && this.status == 200) {
-			sessionStorage.setItem('menu', this.responseText);
-    	}
-	};
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
+function buildItems(id_menu, arr) {
+	let i, ii, iii, iv, v, res2, res3, res4, res5, params, out = '';
+	let res = arr.filter(i1 => i1.tree_level === 2);
+	out = '<ul id="menu" class="a">'
+	for(i = 0; i < res.length; i++) {
+
+		out += '<li>';
+		out += '<a id="' + res[i].id + '" href="#" onclick="menuitem(\'' + res[i].path + '\',\'' + res[i].url + '\')" class="' + res[i].path + '" tree="' + res[i].tree_level + '">' + 
+				res[i].description + 
+				'</a>';
+
+		if (res[i].children > 0) {
+			res2 = arr.filter(i2 => i2.id_parent === res[i].id);
+			out += '<ul>';
+			for(ii = 0; ii < res2.length; ii++) {
+				out += '<li>';
+				out += '<a id="' + res2[ii].id + '" href="#" onclick="menuitem(\'' + res2[ii].path + '\',\'' + res2[ii].url + '\')" class="' + res2[ii].path + '" tree="' + res2[ii].tree_level + '">' + 
+						res2[ii].description + 
+						'</a>';
+				
+				if (res2[ii].children > 0) {
+					res3 = arr.filter(i3 => i3.id_parent === res2[ii].id);
+					out += '<ul>';
+					for(iii = 0; iii < res3.length; iii++) {
+						out += '<li>';
+						out += '<a id="' + res3[iii].id + '" href="#" onclick="menuitem(\'' + res3[iii].path + '\',\'' + res3[iii].url + '\')" class="' + res3[iii].path + '" tree="' + res3[iii].tree_level + '">' + 
+								res3[iii].description + 
+								'</a>';
+
+						if (res3[iii].children > 0) {
+							res4 = arr.filter(i4 => i4.id_parent === res3[iii].id);
+							out += '<ul>';
+							for(iv = 0; iv < res4.length; iv++) {
+								out += '<li>';
+								out += '<a id="' + res4[iv].id + '" href="#" onclick="menuitem(\'' + res4[iv].path + '\',\'' + res4[iv].url + '\')" class="' + res4[iv].path + '" tree="' + res4[iv].tree_level + '">' + 
+										res4[iv].description + 
+										'</a>';
+								
+								if (res4[iv].children > 0) {
+									res5 = arr.filter(i5 => i5.id_parent === res4[iv].id);
+									out += '<ul>';
+									for(v = 0; v < res5.length; v++) {
+										out += '<li>';
+										out += '<a id="' + res5[v].id + '" href="#" onclick="menuitem(\'' + res5[v].path + '\',\'' + res[v].url + '\')" class="' + res5[v].path + '" tree="' + res5[v].tree_level + '">' + 
+												res5[v].description + 
+												'</a>';
+										out += '</li>';
+									}
+									out += '</ul>'
+
+								} else {
+									out += '</li>';
+								}
+
+								out += '</li>';
+							}
+							out += '</ul>';
+
+						} else {
+							out += '</li>';
+						}
+
+						out += '</li>';
+					}
+					out += '</ul>';
+
+				} else {
+					out += '</li>';
+				}
+				
+				out += '</li>';
+			}
+			out += '</ul>';
+
+		} else {
+			out += '</li>';
+		}
+		out += '</li>';
+	}
+	out += '</ul>';
+	return out;
 }
 function listItem(id, path) {
 	console.log(id + ' : ' + path);
@@ -289,12 +261,13 @@ function listItem(id, path) {
 	let arr = new Array();
 	let menu = JSON.parse(sessionStorage.getItem('menu'));
 	for (i = 0; i < menu.items.length; i++) {
-		if (menu.items[i].path.indexOf(path) == 0) {
+		if (menu.items[i].path.indexOf(path) === 0 && menu.items[i].path.length > path.length) {
 			console.log(menu.items[i].description + ' : ' + menu.items[i].path);
 			arr.push(menu.items[i]);
 		}
 	}
-	console.log(buildItems(1,arr));
+	console.log('#### '+arr.length);
+	document.getElementById('rightdv').innerHTML = buildItems(1, arr);
 }
 function viewMenu() {
 	let i, out;
@@ -308,6 +281,18 @@ function viewMenu() {
 		}
 	}
 	document.getElementById('itemsleft').innerHTML = out;
+}
+function loadSessionMenu(id_menu) {
+	let xmlhttp = new XMLHttpRequest();
+	let url = "https://apex.oracle.com/pls/apex/www/ws/menu/" + id_menu;
+	
+	xmlhttp.onreadystatechange = function() {
+    	if (this.readyState == 4 && this.status == 200) {
+			sessionStorage.setItem('menu', this.responseText);
+    	}
+	};
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
 }
 $( document ).ready(function() {
 	
