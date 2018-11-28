@@ -14,14 +14,12 @@ body {
 	font-size: 0.9em;
 }
 ul {
-	padding: 0em 0em 0em 0.2em;
-	list-style-type: none;
-	list-style-position: outside;
-	width: 20em;
+	padding: 0em 0em 0em 2em;
+	list-style-type: circle;
 }
 ul > li {
 	border: 1px solid transparent;
-	padding: 0em 0em 0em 0.5em;
+	padding: 0em 0em 0em 2em;
 	display: block;
 }
 img {
@@ -85,6 +83,7 @@ input[type="text"], input[type="email"], select, input[type="password"] {
 	<div id="search">
 		<h2>POC Menu Camada acessando Oracle Cloud</h2>
 		<button class="app-btn" value="load" onclick="loadMenu(1)">LOAD MENU</button><br />
+		<button class="app-btn" id="btnMenu" onclick="loadBasicLevel()">START</button>
 		<input type="text" id="txtSearch" size="30" maxlength="100" onkeyup="searchMenu()" placeholder="search...">
 	</div>
 	<div id="dv"></div>
@@ -112,12 +111,57 @@ function loadMenu(id_menu) {
 	xmlhttp.onreadystatechange = function() {
     	if (this.readyState == 4 && this.status == 200) {
         	let arr = JSON.parse(this.responseText);
-			document.getElementById("dv").innerHTML = buildItems(id_menu, arr.items);
-			resetMenu();
+			sessionStorage.setItem('menu', this.responseText);
+			console.log('menu loaded');
     	}
 	};
 	xmlhttp.open("GET", url, true);
 	xmlhttp.send();
+}
+function loadChildLevel(level, id_parent) {
+	console.log('level: '+level+' id_parent: '+id_parent);
+	let i, out;
+	let menu = JSON.parse(sessionStorage.getItem('menu'));
+	out = '';
+	for (i = 0; i < menu.items.length; i++) {
+		if (menu.items[i].tree_level === level && menu.items[i].id_parent === id_parent) {
+			console.log(menu.items[i].description);
+			out += '<li><a href="#">' + menu.items[i].description + '</a></li>';
+		}
+	}
+	return out;
+}
+function loadBasicLevel() {
+	let i, out;
+	let menu = JSON.parse(sessionStorage.getItem('menu'));
+	out = '<ul>';
+	for (i = 0; i < menu.items.length; i++) {
+		if (menu.items[i].tree_level === 1) {
+			console.log(menu.items[i].description);
+			out += '<li><a href="#" onclick="loadChildren(' + menu.items[i].tree_level + ',' + menu.items[i].id_parent +')">' + menu.items[i].description + '</a></li>';
+			if (menu.items[i].children > 0) {
+				console.log(menu.items[i].children);
+				out += '<ul>';
+				out += loadChildLevel(menu.items[i].tree_level+1, menu.items[i].id);
+				out += '</ul>';
+			}
+		}
+	}
+	out += '</ul>';
+	document.getElementById('dv').innerHTML = out;
+}
+function viewMenu() {
+	let i, out;
+	let menu = JSON.parse(sessionStorage.getItem('menu'));
+	console.log(menu.items.length);
+	out = '';
+	level0 = menu.items[0];
+	for (i = 0; i < level0.children; i++) {
+		//if (menu.items[i].tree_level === 1) {
+		console.log(menu.items[i].id + ':' + menu.items[i].id_parent + ':' + menu.items[i].description + ':' + menu.items[i].tree_level + ':' + menu.items[i].path + ':' + menu.items[i].children);
+		//}
+	}
+	//document.getElementById('itemsleft').innerHTML = out;
 }
 function toggle(arr) {
 	let i;
@@ -135,17 +179,13 @@ function menuitem(id, id_parent, seq, tree_level, children, path, description, u
 	toggle(arr);
 }
 function buildItems(id_menu, arr) {
-	let i, ii, iii, iiii, out = '';
-	let res = arr.filter(item => item.tree_level === 1);
-	for(i = 0; i < res.length; i++) {
-		console.log(res[i].description);
-	}
-	/*
-	
+	let out = '';
 	let i; 
 	let url = '';
 	let params;
-	let cont = 0;
+	let filler = '';
+	let temqueabrirul = true;
+	let temquefecharul = false;
 	out = '<ul id="menu" class="a">';
     for(i = 0; i < arr.length; i++) {
 		url = arr[i].url;
@@ -158,27 +198,43 @@ function buildItems(id_menu, arr) {
 			arr[i].description + '\',\'' +
 			arr[i].url + '\'';
 
-		out += '<li>';
-				
+		if (temqueabrirul) {
+			out += '<ul><li>';
+		} else {
+			out += '<li>';
+		}
+		
 		out += '<a id="' + arr[i].id + '" href="#" onclick="menuitem(' + params + ')" class="' + arr[i].path + '" tree="' + arr[i].tree_level + '">' + 
 			arr[i].description + 
 			'</a>';
-		
-		console.log('arr[i].children: ' + arr[i].children + ' cont: ' + cont);
-		if (arr[i].children > 0 && cont === 0) {
-			cont++;
-			out += '<ul>';
-		} else if (arr[i].children === 0) {
-			out += '</li>';
-		} else if (arr[i].children === cont) {
-			cont = 0;
-			out += '</ul>';
+
+		if (arr[i+1] != undefined) {
+			console.log('1 - ' + arr[i].tree_level + ' comparing ' + arr[i+1].tree_level +' : ' + arr[i].description +  ' abrir: '+temqueabrirul+' fechar: '+temquefecharul);
+			if (arr[i].tree_level < arr[i+1].tree_level) {
+				temqueabrirul = true;
+				temquefecharul = false;
+				continue;
+			} else if (arr[i].tree_level > arr[i+1].tree_level) {
+				temqueabrirul = false;
+				temquefecharul = true;
+			} else {
+				temqueabrirul = false;
+				temquefecharul = false;
+			}
+		} else {
+			console.log('last: '+arr[i].description);
+			temqueabrirul = false;
+			temquefecharul = true;
+		}
+		//console.log('2 - ' + arr[i].tree_level + ' comparing ' + arr[i+1].tree_level +' : ' + arr[i].description +  ' abrir: '+temqueabrirul+' fechar: '+temquefecharul);
+		if (temquefecharul) {
+			out += '</li></ul>';
 		} else {
 			out += '</li>';
-		}		
+		}
+
 	}
 	out += '</ul>';
-	*/
 	return out;
 }
 
