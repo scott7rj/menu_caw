@@ -135,13 +135,16 @@ function menuitem(id, id_parent, seq, tree_level, children, path, description, u
 	toggle(arr);
 }
 function buildItems(id_menu, arr) {
-	let i, ii, iii, iiii, out = '';
-	let res = arr.filter(item => item.tree_level === 1);
+	let i, ii, iii, iiii, res2, out = '';
+	let res = arr.filter(i1 => i1.tree_level === 1);
 	for(i = 0; i < res.length; i++) {
 		console.log(res[i].description);
+		res2 = arr.filter(i2 => i2.id_parent === res[i].id);
+		for(ii = 0; ii < res2.length; ii++) {
+			console.log('-----' + res2[ii].description);
+		}
 	}
 	/*
-	
 	let i; 
 	let url = '';
 	let params;
