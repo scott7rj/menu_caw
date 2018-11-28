@@ -5,25 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>css grid 1</title>
 <style>
+
 * {
-	margin:0;
-	padding:0;
+	margin: 0;
+	padding: 0;
 }
+
 body {
-	background-color: #555555;
+	background-color: #CCCCCC;
 	font-size: 0.9em;
 }
+
 ul {
-	padding: 0em 0em 0em 0.2em;
-	list-style-type: none;
-	list-style-position: outside;
-	width: 20em;
+	margin: 0em 0em 0em 0.5em;
+	padding: 0em 0em 0em 1em;
+	list-style-type: circle;
 }
-ul > li {
-	border: 1px solid transparent;
-	padding: 0em 0em 0em 0.5em;
+/*
+ul  li {
 	display: block;
 }
+
 img {
 	margin: 0;
 	padding: 0;
@@ -78,6 +80,7 @@ input[type="text"], input[type="email"], select, input[type="password"] {
 	background-color: #777777;
 	cursor: pointer;
 }
+*/
 </style>
 </head>
 <body>
@@ -85,7 +88,7 @@ input[type="text"], input[type="email"], select, input[type="password"] {
 	<div id="search">
 		<h2>POC Menu Camada acessando Oracle Cloud</h2>
 		<button class="app-btn" value="load" onclick="loadMenu(1)">LOAD MENU</button><br />
-		<input type="text" id="txtSearch" size="30" maxlength="100" onkeyup="searchMenu()" placeholder="search...">
+		<input type="text" id="txtSearch" size="20" maxlength="50" onkeyup="searchMenu()" placeholder="search...">
 	</div>
 	<div id="dv"></div>
 
@@ -129,59 +132,91 @@ function toggle(arr) {
 		}
 	}
 }
-function menuitem(id, id_parent, seq, tree_level, children, path, description, url) {
+function menuitem(path) {
 	let menu = document.getElementById("dv");
 	let arr = dv.querySelectorAll("a[class^='" + path + "']");
 	toggle(arr);
 }
 function buildItems(id_menu, arr) {
-	let i, ii, iii, iiii, res2, out = '';
+	let i, ii, iii, iv, v, res2, res3, res4, res5, params, out = '';
 	let res = arr.filter(i1 => i1.tree_level === 1);
+	out = '<ul id="menu" class="a">'
 	for(i = 0; i < res.length; i++) {
-		console.log(res[i].description);
-		res2 = arr.filter(i2 => i2.id_parent === res[i].id);
-		for(ii = 0; ii < res2.length; ii++) {
-			console.log('-----' + res2[ii].description);
-		}
-	}
-	/*
-	let i; 
-	let url = '';
-	let params;
-	let cont = 0;
-	out = '<ul id="menu" class="a">';
-    for(i = 0; i < arr.length; i++) {
-		url = arr[i].url;
-		params = arr[i].id + ',' + 
-			arr[i].id_parent + ',' + 
-			arr[i].tree_level + ',' + 
-			arr[i].seq + ',' + 
-			arr[i].children + ',\'' + 
-			arr[i].path + '\',\'' + 
-			arr[i].description + '\',\'' +
-			arr[i].url + '\'';
 
 		out += '<li>';
-				
-		out += '<a id="' + arr[i].id + '" href="#" onclick="menuitem(' + params + ')" class="' + arr[i].path + '" tree="' + arr[i].tree_level + '">' + 
-			arr[i].description + 
-			'</a>';
-		
-		console.log('arr[i].children: ' + arr[i].children + ' cont: ' + cont);
-		if (arr[i].children > 0 && cont === 0) {
-			cont++;
+		out += '<a id="' + res[i].id + '" href="#" onclick="menuitem(\'' + res[i].path + '\',\'' + res[i].url + '\')" class="' + res[i].path + '" tree="' + res[i].tree_level + '">' + 
+				res[i].description + 
+				'</a>';
+
+		if (res[i].children > 0) {
+			res2 = arr.filter(i2 => i2.id_parent === res[i].id);
 			out += '<ul>';
-		} else if (arr[i].children === 0) {
-			out += '</li>';
-		} else if (arr[i].children === cont) {
-			cont = 0;
+			for(ii = 0; ii < res2.length; ii++) {
+				out += '<li>';
+				out += '<a id="' + res2[ii].id + '" href="#" onclick="menuitem(\'' + res2[ii].path + '\',\'' + res2[ii].url + '\')" class="' + res2[ii].path + '" tree="' + res2[ii].tree_level + '">' + 
+						res2[ii].description + 
+						'</a>';
+				
+				if (res2[ii].children > 0) {
+					res3 = arr.filter(i3 => i3.id_parent === res2[ii].id);
+					out += '<ul>';
+					for(iii = 0; iii < res3.length; iii++) {
+						out += '<li>';
+						out += '<a id="' + res3[iii].id + '" href="#" onclick="menuitem(\'' + res3[iii].path + '\',\'' + res3[iii].url + '\')" class="' + res3[iii].path + '" tree="' + res3[iii].tree_level + '">' + 
+								res3[iii].description + 
+								'</a>';
+
+						if (res3[iii].children > 0) {
+							res4 = arr.filter(i4 => i4.id_parent === res3[iii].id);
+							out += '<ul>';
+							for(iv = 0; iv < res4.length; iv++) {
+								out += '<li>';
+								out += '<a id="' + res4[iv].id + '" href="#" onclick="menuitem(\'' + res4[iv].path + '\',\'' + res4[iv].url + '\')" class="' + res4[iv].path + '" tree="' + res4[iv].tree_level + '">' + 
+										res4[iv].description + 
+										'</a>';
+								
+								if (res4[iv].children > 0) {
+									res5 = arr.filter(i5 => i5.id_parent === res4[iv].id);
+									out += '<ul>';
+									for(v = 0; v < res5.length; v++) {
+										out += '<li>';
+										out += '<a id="' + res5[v].id + '" href="#" onclick="menuitem(\'' + res5[v].path + '\',\'' + res[v].url + '\')" class="' + res5[v].path + '" tree="' + res5[v].tree_level + '">' + 
+												res5[v].description + 
+												'</a>';
+										out += '</li>';
+									}
+									out += '</ul>'
+
+								} else {
+									out += '</li>';
+								}
+
+								out += '</li>';
+							}
+							out += '</ul>';
+
+						} else {
+							out += '</li>';
+						}
+
+						out += '</li>';
+					}
+					out += '</ul>';
+
+				} else {
+					out += '</li>';
+				}
+				
+				out += '</li>';
+			}
 			out += '</ul>';
+
 		} else {
 			out += '</li>';
-		}		
+		}
+		out += '</li>';
 	}
 	out += '</ul>';
-	*/
 	return out;
 }
 
