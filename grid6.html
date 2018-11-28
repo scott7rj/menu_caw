@@ -11,17 +11,23 @@
 }
 body {
 	background-color: #555555;
-	font-size: 0.75em;
-}
-span {
-	display: block;
-	border-width: 1px;
-	border-style: solid;
-	border-color: transparent;
+	font-size: 0.9em;
 }
 ul {
-	list-style-type: circle;
-	padding: 0em 0em 0em 1.8em;
+	padding: 0em 0em 0em 0.2em;
+	list-style-type: none;
+	list-style-position: outside;
+	width: 10em;
+}
+ul > li {
+	border: 1px solid red;
+	padding: 0em 0em 0em 0.5em;
+	display: inline-block;
+}
+img {
+	margin: 0;
+	padding: 0;
+	border: 1px solid transparent;
 }
 .wrapper {
 	float: left;
@@ -52,6 +58,20 @@ input[type="text"], input[type="email"], select, input[type="password"] {
     height: 1.6em;
     vertical-align: top;
 }
+.button {
+	margin: 0px 0px 1px 0px;
+	padding: 0;
+	border: 1px solid black;
+	background-color: transparent;
+	width: 100%;
+	text-align: left;
+}
+.button img {
+	float: left;
+}
+.button:hover {
+	cursor: pointer;
+}
 .app-btn {
    margin: 4px 0px 0px 0px;
    padding: 0;
@@ -62,7 +82,7 @@ input[type="text"], input[type="email"], select, input[type="password"] {
    vertical-align: top;
    font-size: 0.8em;
    font-weight: bold;
-   width: 200px;
+   width: 8em;
 }
 .app-btn:hover {
 	background-color: #777777;
@@ -71,6 +91,33 @@ input[type="text"], input[type="email"], select, input[type="password"] {
 .app-btn:focus {
 	background-color: #777777;
 	cursor: pointer;
+}
+#btnMenu {
+	bottom:0;
+	left:0;
+	position:absolute;
+	z-index: 9999;
+}
+#menudv {
+	bottom: 1.4em;
+	left: 0;
+	position:absolute;
+	width: 45em;
+	height: 40em;
+	z-index: 9998;
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+}
+#menudv div:nth-child(even) {
+	background-color: #aaa;
+}
+#menudv div:nth-child(odd) {
+	background-color: #888;
+}
+#searchdv {
+	position: absolute;
+	bottom: 0.2em;
+	left: 0;
 }
 </style>
 </head>
@@ -82,6 +129,29 @@ input[type="text"], input[type="email"], select, input[type="password"] {
 		<input type="text" id="txtSearch" size="30" maxlength="100" onkeyup="searchMenu()" placeholder="search...">
 	</div>
 	<div id="dv"></div>
+
+	<div id="menudv">
+		<div id="leftdv">
+			<div id="itemsleft">
+				<button class="button">
+					<img src="img/icons8-alligator-48.png" width="30" />Conta/Contrato
+				</button>
+				<button class="button">
+					<img src="img/icons8-bear-48.png" width="30" />Unidade
+				</button>
+				<button class="button">
+					<img src="img/icons8-bee-48.png" width="30" />Informações Gerenciais
+				</button>
+			</div>
+			<div id="searchdv">
+				<input type="text" id="txtSearch" size="30" maxlength="100" onkeyup="searchMenu()" placeholder="search...">
+			</div>
+		</div>
+		<div id="rightdv">
+			
+		</div>
+	</div>
+	<button class="app-btn" id="btnMenu">START</button>
 </div>
 <script src="js/lib/jquery-3.3.1.min.js" type="text/javascript"></script>
 <script>
@@ -214,6 +284,7 @@ function searchMenu() {
 }
 
 $( document ).ready(function() {
+	
     $('#txtSearch').focus();
     $(document).keypress(function(e) {
         if(e.which == 13) {
