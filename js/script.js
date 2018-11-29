@@ -43,6 +43,9 @@ function searchMenu() {
 	}
 	document.getElementsByTagName("rightdv")[0].innerHTML = div.innerHTML;
 }
+function menuitem(id, description, cl, url) {
+	alert('item: '+id+': '+description+' clicked! go to URL: '+url);
+}
 function buildItems(id_menu, arr, level) {
 	let i, ii, iii, iv, v, res2, res3, res4, res5, params, out = '';
 	let res = arr.filter(i1 => i1.tree_level === level);
@@ -50,7 +53,7 @@ function buildItems(id_menu, arr, level) {
 	for(i = 0; i < res.length; i++) {
 
 		out += '<li>';
-		out += '<a id="' + res[i].id + '" href="#" onclick="menuitem(\'' + res[i].path + '\',\'' + res[i].url + '\')" class="' + res[i].path + '" tree="' + res[i].tree_level + '">' + 
+		out += '<a id="' + res[i].id + '" href="#" onclick="menuitem(' + res[i].id + ',\'' + res[i].description + '\',\'' + res[i].path + '\',\'' + res[i].url + '\')" class="' + res[i].path + '" tree="' + res[i].tree_level + '">' + 
 				res[i].description + 
 				'</a>';
 
@@ -59,7 +62,7 @@ function buildItems(id_menu, arr, level) {
 			out += '<ul>';
 			for(ii = 0; ii < res2.length; ii++) {
 				out += '<li>';
-				out += '<a id="' + res2[ii].id + '" href="#" onclick="menuitem(\'' + res2[ii].path + '\',\'' + res2[ii].url + '\')" class="' + res2[ii].path + '" tree="' + res2[ii].tree_level + '">' + 
+				out += '<a id="' + res2[ii].id + '" href="#" onclick="menuitem(' + res2[ii].id + ',\'' + res2[ii].description + '\',\'' + res2[ii].path + '\',\'' + res2[ii].url + '\')" class="' + res2[ii].path + '" tree="' + res2[ii].tree_level + '">' + 
 						res2[ii].description + 
 						'</a>';
 				
@@ -68,7 +71,7 @@ function buildItems(id_menu, arr, level) {
 					out += '<ul>';
 					for(iii = 0; iii < res3.length; iii++) {
 						out += '<li>';
-						out += '<a id="' + res3[iii].id + '" href="#" onclick="menuitem(\'' + res3[iii].path + '\',\'' + res3[iii].url + '\')" class="' + res3[iii].path + '" tree="' + res3[iii].tree_level + '">' + 
+						out += '<a id="' + res3[iii].id + '" href="#" onclick="menuitem(' + res3[iii].id + ',\'' + res3[iii].description + '\',\'' + res3[iii].path + '\',\'' + res3[iii].url + '\')" class="' + res3[iii].path + '" tree="' + res3[iii].tree_level + '">' + 
 								res3[iii].description + 
 								'</a>';
 
@@ -77,7 +80,7 @@ function buildItems(id_menu, arr, level) {
 							out += '<ul>';
 							for(iv = 0; iv < res4.length; iv++) {
 								out += '<li>';
-								out += '<a id="' + res4[iv].id + '" href="#" onclick="menuitem(\'' + res4[iv].path + '\',\'' + res4[iv].url + '\')" class="' + res4[iv].path + '" tree="' + res4[iv].tree_level + '">' + 
+								out += '<a id="' + res4[iv].id + '" href="#" onclick="menuitem(' + res4[iv].id + ',\'' + res4[iv].description + '\',\'' + res4[iv].path + '\',\'' + res4[iv].url + '\')" class="' + res4[iv].path + '" tree="' + res4[iv].tree_level + '">' + 
 										res4[iv].description + 
 										'</a>';
 								
@@ -86,7 +89,7 @@ function buildItems(id_menu, arr, level) {
 									out += '<ul>';
 									for(v = 0; v < res5.length; v++) {
 										out += '<li>';
-										out += '<a id="' + res5[v].id + '" href="#" onclick="menuitem(\'' + res5[v].path + '\',\'' + res[v].url + '\')" class="' + res5[v].path + '" tree="' + res5[v].tree_level + '">' + 
+										out += '<a id="' + res5[v].id + '" href="#" onclick="menuitem(' + res5[v].id + ',\'' + res5[v].description + '\',\'' + res5[v].path + '\',\'' + res[v].url + '\')" class="' + res5[v].path + '" tree="' + res5[v].tree_level + '">' + 
 												res5[v].description + 
 												'</a>';
 										out += '</li>';
@@ -151,7 +154,7 @@ function viewMenu() {
 	out = '';
 	for (i = 0; i < menu.items.length; i++) {
 		if (menu.items[i].tree_level === 1) {
-			out += '<button class="button" onclick="listItem(' + menu.items[i].id + ',\'' + menu.items[i].path + '\')"><img src="' + menu.items[i].img + '" width="20" />' + menu.items[i].description + '</button>';
+			out += '<button class="button" onclick="listItem(' + menu.items[i].id + ',\'' + menu.items[i].path + '\')"><img src="' + menu.items[i].img + '" width="15" />' + menu.items[i].description + '</button>';
 		}
 	}
 	document.getElementsByTagName('leftdv')[0].innerHTML = out;
