@@ -120,7 +120,7 @@ input[type="text"], input[type="email"], select, input[type="password"] {
                      	 "search search search";
 }
 
-#menudv > lefttdv {
+#menudv > leftdv {
 	grid-area: left;
 	background-color: #aaa;
 }
@@ -140,13 +140,13 @@ input[type="text"], input[type="email"], select, input[type="password"] {
 }
 </style>
 </head>
-<body>
-<div class="wrapper">
+<body onclick="processBody()">
+<div id="wrapper">
 	
 	<div id="menudv">
-		<leftdv></leftdv>
-		<rightdv></rightdv>
-		<searchdv>
+		<leftdv id="leftdv"></leftdv>
+		<rightdv id="rightdv"></rightdv>
+		<searchdv id="searchdv">
 			<input type="text" id="txtSearch" size="30" maxlength="100" onkeyup="searchMenu()" placeholder="search...">
 		</searchdv>
 	</div>
@@ -159,7 +159,17 @@ input[type="text"], input[type="email"], select, input[type="password"] {
 <script src="js/lib/jquery-3.3.1.min.js" type="text/javascript"></script>
 <script src="js/script.js" type="text/javascript"></script>
 <script>
+/*
+document.addEventListener('click', function(e) {
+	e = e || window.event;
+	console.log(e.target.id);
+	if (e.target.id !== 'btnMenu' && e.target.id !== 'leftdv' && e.target.id !== 'rightdv' && e.target.id !== 'searchdv') {
+		document.getElementById('menudv').style.display = 'none';	
+	}
+}, false);
+*/
 $( document ).ready(function() {
+
 	document.getElementById('hiddendv').style.display = 'none';
     $('#txtSearch').focus();
     $(document).keypress(function(e) {

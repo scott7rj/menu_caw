@@ -1,3 +1,9 @@
+function processBody() {
+	console.log('process body...');
+	
+	//if (document.getElementById("menudv").style.display === '')
+		//document.getElementById("menudv").style.display = 'none';
+}
 function resetMenu() {
 	document.getElementsByTagName("rightdv")[0].innerHTML = '';
 }
